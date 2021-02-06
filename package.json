@@ -1,6 +1,6 @@
 {
   "name": "react-free-draggable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "transform实现的自由拖拽组件",
   "main": "lib/bundle.js",
   "repository": "https://github.com/mezhanglei",
@@ -19,12 +19,9 @@
     "css-fix": "stylelint src/**/*.{css,scss,less} --fix"
   },
   "keywords": [
-    "react-awesome-infinite-scroll",
-    "react-infinite",
-    "react-infinite-scroll",
-    "infinite-scroll",
-    "infinite-list",
-    "scroll-list"
+    "react-draggable",
+    "react-free-draggable",
+    "react-drag"
   ],
   "author": "zhanglei",
   "license": "MIT",

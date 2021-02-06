@@ -66,7 +66,7 @@ import Draggable from 'react-free-draggable';
 | onStop                        | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
 | position                      | `{x: number, y: number}`          | -                                                  | 拖拽元素在父元素内的位置                                                                                  |
-| axis                          | `both | x | y | none`             | -                                                  | 限制拖拽运动方向                                                                                  |
+| axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | 在boundsParent元素内部范围的限制拖拽范围                                                                                          |
 

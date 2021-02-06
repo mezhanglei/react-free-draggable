@@ -66,7 +66,7 @@ import Draggable from 'react-free-draggable';
 | onStop                        | `function`                        | -                                                  | the end event                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
 | position                      | `{x: number, y: number}`          | -                                                  | the position of an element within its parent element                                                                                  |
-| axis                          | `both | x | y | none`             | -                                                  | the direction of drag and drop                                                                                  |
+| axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | The range within the boundsParent element                                                                                          |
 

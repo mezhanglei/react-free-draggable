@@ -127,7 +127,7 @@ export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterfa
     };
 }
 
-// 返回限制下的纠正后的在父元素中的视口位置
+// 元素在父元素限制范围下的位置
 export function getPositionByBounds(node: HTMLElement, parent: any, position: PositionInterface, bounds: BoundsInterface | {} = {}): PositionInterface {
 
     // 限制父元素
@@ -219,6 +219,14 @@ export function removeEvent(el: any, event: string, handler: (...rest: any[]) =>
     }
 }
 
+/**
+ * 获取页面或元素的卷曲滚动(兼容写法)
+ * @param el 目标元素
+ */
+export interface ScrollInterface {
+    x: number;
+    y: number;
+}
 export function getScroll(el: HTMLElement = (document.body || document.documentElement)): undefined | ScrollInterface {
     if (!isDom(el)) {
         return;
@@ -243,16 +251,18 @@ export function getScroll(el: HTMLElement = (document.body || document.documentE
  */
 export function getClientXYInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | SizeInterface {
     let pos = null;
-    if (el instanceof MouseEvent) {
+    if ("clientX" in el) {
         pos = {
-            x: el.clientX - parent.getBoundingClientRect().left,
-            y: el.clientY - parent.getBoundingClientRect().top
+            x: el?.clientX - parent.getBoundingClientRect().left,
+            y: el?.clientY - parent.getBoundingClientRect().top
         };
-    } else if (el instanceof TouchEvent) {
-        pos = {
-            x: el.touches[0].clientX - parent.getBoundingClientRect().left,
-            y: el.touches[0].clientY - parent.getBoundingClientRect().top
-        };
+    } else if ("touches" in el) {
+        if (el?.touches[0]) {
+            pos = {
+                x: el?.touches[0]?.clientX - parent.getBoundingClientRect().left,
+                y: el?.touches[0]?.clientY - parent.getBoundingClientRect().top
+            };
+        }
     } else if (isDom(el)) {
         pos = {
             x: el.getBoundingClientRect().left - parent.getBoundingClientRect().left,
@@ -272,10 +282,10 @@ export function getPositionInParent(el: MouseEvent | TouchEvent | HTMLElement, p
     const clientXY = getClientXYInParent(el, parent);
     const scroll = getScroll(parent);
     let pos = null;
-    if (clientXY && scroll) {
+    if (clientXY) {
         pos = {
-            x: clientXY.x + scroll.x,
-            y: clientXY.y + scroll.y,
+            x: clientXY.x + (scroll?.x || 0),
+            y: clientXY.y + (scroll?.y || 0),
         }
     }
 

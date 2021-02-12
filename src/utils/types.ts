@@ -19,12 +19,7 @@ export interface PositionType {
 }
 
 // 轴的类型
-export enum AxisType {
-    BOTH = "both",
-    X = "x",
-    Y = "y",
-    NONE = "none"
-}
+export type AxisType = "both" | "x" | "y" | "none";
 
 // 限制范围的类型
 export interface BoundsInterface {
@@ -44,8 +39,8 @@ export interface DraggableEventProps {
     disabled?: boolean; // 禁止拖拽
     dragNode?: string | HTMLElement; // 拖拽元素的类选择器
     disabledNode?: string | HTMLElement; // 不允许拖拽的选择器
-    enableUserSelectHack: boolean; // 允许添加选中样式
-    grid: [number, number]; // 设置x,y方向的拖拽幅度，多少幅度移动一次目标
+    enableUserSelectHack?: boolean; // 允许添加选中样式
+    grid?: [number, number]; // 设置x,y方向的拖拽幅度，多少幅度移动一次目标
     boundsParent?: string | HTMLElement; // 限制拖拽的父元素，默认body
 }
 

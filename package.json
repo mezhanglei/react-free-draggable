@@ -1,6 +1,6 @@
 {
   "name": "react-free-draggable",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "transform实现的自由拖拽组件",
   "main": "lib/bundle.js",
   "repository": "https://github.com/mezhanglei",
@@ -86,6 +86,8 @@
   },
   "dependencies": {
     "@types/classnames": "^2.2.11",
+    "@types/history": "^4.7.8",
+    "@types/react-router-dom": "^5.1.7",
     "antd": "^4.4.2",
     "classnames": "^2.2.6",
     "immutable": "^4.0.0-rc.12",

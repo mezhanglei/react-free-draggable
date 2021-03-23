@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-1.0.4-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-1.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -69,6 +69,7 @@ import Draggable from 'react-free-draggable';
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | 在boundsParent元素内部范围的限制拖拽范围                                                                                          |
+| zIndexRange                   | `[number, number]`                | `[1, 10]`                                          | 拖拽时可设置的层级范围                                                                                          |
 
 
 

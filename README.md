@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-1.0.4-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-1.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -69,6 +69,7 @@ import Draggable from 'react-free-draggable';
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | The range within the boundsParent element                                                                                          |
+| zIndexRange                   | `[number, number]`                | `[1, 10]`                                          | The `zIndex` range that can be set when dragging and dropping                                                                                          |
 
 
 

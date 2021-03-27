@@ -19,6 +19,8 @@ const Draggable: React.FC<DraggableProps> = (props) => {
         positionOffset,
         bounds,
         zIndexRange = [1, 10],
+        className,
+        style,
         ...DraggableEventProps
     } = props;
 
@@ -158,7 +160,7 @@ const Draggable: React.FC<DraggableProps> = (props) => {
 
 
     // 包裹元素的className
-    const cls = classNames((children.props.className || ''), wrapClassName, {
+    const cls = classNames((children.props.className || ''), wrapClassName, className, {
         [wrapClassNameDragging]: draggingRef.current,
         [wrapClassNameDragged]: dragged
     });
@@ -183,8 +185,8 @@ const Draggable: React.FC<DraggableProps> = (props) => {
         <DraggableEvent ref={nodeRef} {...DraggableEventProps} onStart={onDragStart} onDrag={onDrag} onStop={onDragStop}>
             {React.cloneElement(React.Children.only(children), {
                 className: cls,
-                style: { ...children.props.style, ...(!isSVG && createCSSTransform(currentPosition, positionOffset) || {}), zIndex: eventData?.zIndex },
-                transform: isSVG && createSVGTransform(currentPosition, positionOffset) || "",
+                style: { ...children.props.style, ...style, ...(!isSVG && createCSSTransform(currentPosition, positionOffset) || {}), zIndex: eventData?.zIndex },
+                transform: (isSVG && createSVGTransform(currentPosition, positionOffset)) || "",
             })}
         </DraggableEvent>
     );

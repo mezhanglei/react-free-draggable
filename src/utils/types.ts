@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 // 事件对象
 export type EventType = MouseEvent | TouchEvent;
 
@@ -56,6 +58,8 @@ export interface DraggableProps extends DraggableEventProps {
     positionOffset?: PositionType; // 接收偏移位置（不受bounds和boundsParent影响）
     bounds?: BoundsInterface; // 在boundsParent元素内部范围的限制拖拽范围
     zIndexRange?: [number, number] // zIndex的变化范围
+    className?: string;
+    style?: CSSProperties;
 }
 
 // 事件处理函数的type

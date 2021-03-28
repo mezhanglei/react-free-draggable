@@ -38,9 +38,9 @@ export interface BoundsInterface {
 // DraggableEvent的props的类型
 export interface DraggableEventProps {
     children: any;
-    onStart?: (e: EventType, position?: EventData) => void | boolean; // 拖拽开始事件
+    onDragStart?: (e: EventType, position?: EventData) => void | boolean; // 拖拽开始事件
     onDrag?: (e: EventType, position?: EventData) => void | boolean; // 拖拽进行事件
-    onStop?: (e: EventType, position?: EventData) => void | boolean; // 拖拽结束事件
+    onDragStop?: (e: EventType, position?: EventData) => void | boolean; // 拖拽结束事件
     allowAnyClick?: boolean; // 表示允许非鼠标左键单击拖动
     disabled?: boolean; // 禁止拖拽
     dragNode?: string | HTMLElement; // 拖拽元素的类选择器
@@ -52,7 +52,7 @@ export interface DraggableEventProps {
 
 // Draggable的props的类型
 export interface DraggableProps extends DraggableEventProps {
-    scale: number; // 拖拽灵敏度
+    scale?: number; // 拖拽灵敏度
     position?: PositionType; // 拖拽元素在父元素内的受控位置（不会受到bounds和boundsParent影响）
     axis: AxisType; // 限制拖拽的方向
     positionOffset?: PositionType; // 接收偏移位置（不受bounds和boundsParent影响）

@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-1.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-2.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -61,9 +61,9 @@ import Draggable from 'react-free-draggable';
 | boundsParent                  | `string / HTMLElement`            | `body`                                             | Restrict the drag and drop parent element, default body              |
 | disabled                      | `boolean`                         | -                                                  | disabled drag                                                                                          |
 | allowAnyClick                 | `boolean`                         | -                                                  | Indicates that drag is allowed without a left mouse click                                                                                          |
-| onStart                       | `function`                        | -                                                  | the start event                                                                                          |
+| onDragStart                       | `function`                        | -                                                  | the start event                                                                                          |
 | onDrag                        | `function`                        | -                                                  | the dragging event                      |
-| onStop                        | `function`                        | -                                                  | the end event                                                                                  |
+| onDragStop                        | `function`                        | -                                                  | the end event                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
 | position                      | `{x: number, y: number}`          | -                                                  | the position of an element within its parent element                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |

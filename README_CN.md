@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-1.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-2.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -61,9 +61,9 @@ import Draggable from 'react-free-draggable';
 | boundsParent                  | `string / HTMLElement`            | `body`                                             | 限制拖拽的父元素，默认body              |
 | disabled                      | `boolean`                         | -                                                  | 禁止拖拽                                                                                          |
 | allowAnyClick                 | `boolean`                         | -                                                  | 表示允许非鼠标左键单击拖动                                                                                          |
-| onStart                       | `function`                        | -                                                  | 拖拽开始事件                                                                                          |
+| onDragStart                       | `function`                        | -                                                  | 拖拽开始事件                                                                                          |
 | onDrag                        | `function`                        | -                                                  | 拖拽进行事件                      |
-| onStop                        | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
+| onDragStop                        | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
 | position                      | `{x: number, y: number}`          | -                                                  | 拖拽元素在父元素内的位置                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |

@@ -1,6 +1,6 @@
 {
   "name": "react-free-draggable",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "transform实现的自由拖拽组件",
   "main": "lib/bundle.js",
   "repository": "https://github.com/mezhanglei",

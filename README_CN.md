@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-2.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-2.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -19,7 +19,7 @@
 
 1. 子元素不能为行内(inline)类型元素,因为transform对行内元素无效!
 2. `props.children`限制为单个闭合标签!
-2. `DraggableEvent`组件为事件处理组件,提供给开发者在移动目标时事件对象处理,不进行移动操作
+2. `DraggableEvent`组件为事件处理组件,提供给开发者在移动目标时事件对象处理的灵活api实现一些定制行为.
 
 ### 快速安装
 ```

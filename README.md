@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-2.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-2.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -18,8 +18,8 @@ Using the free drag and drop component of Transform, the drag process does not a
 # Matters
 
 1. The child element cannot be an inline element because transform does not work on inline elements!
-2. 'props. Children' limited to a single closed tag!
-2. The 'DraggableEvent' component is an event handling component that provides developers with the ability to handle event objects when moving objects without moving them
+2. `props. Children` limited to a single closed tag!
+2. The `DraggableEvent` component is an event handling component that provides developers with the ability to handle event;
 
 ### install
 ```

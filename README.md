@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-2.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-3.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -37,7 +37,6 @@ import Draggable from 'react-free-draggable';
         axis="both"
         boundsParent=".boxs"
         // dragNode=".handle"
-        position={{ x: 10, y: 0 }}
         // grid={[100, 25]}
         scale={1}
         >
@@ -65,7 +64,8 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | the dragging event, renturn `false` can stop it;                      |
 | onDragStop                    | `function`                        | -                                                  | the end event, renturn `false` can stop it;                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
-| position                      | `{x: number, y: number}`          | -                                                  | the position of an element within its parent element                                                                                  |
+| x                             | `number`                          | -                                                  | position in x axis                                                                                  |
+| y                             | `number`                          | -                                                  | position in y axis                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | The range within the boundsParent element                                                                                          |

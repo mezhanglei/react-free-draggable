@@ -128,17 +128,17 @@ export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterfa
 }
 
 // 元素在父元素限制范围下的位置
-export function getPositionByBounds(node: HTMLElement, parent: any, position: PositionInterface, bounds: BoundsInterface | undefined): PositionInterface {
+export function getPositionByBounds(node: HTMLElement, parent: any, position: PositionInterface, bounds?: BoundsInterface): PositionInterface {
 
     // 限制父元素
     const boundsParent: HTMLElement = findElement(parent);
 
-    if (!isDom(node) || !isDom(boundsParent) || !getBoundsInParent(node, boundsParent) || !isContains(boundsParent, node)) {
+    if (!getBoundsInParent(node, boundsParent)) {
         return position;
     }
 
     const resultBounds = { ...getBoundsInParent(node, boundsParent), ...bounds };
-    const { xStart, yStart, xEnd, yEnd } = resultBounds;
+    const { xStart = 0, yStart = 0, xEnd = 0, yEnd = 0 } = resultBounds;
     let { x, y } = position;
 
     if (isNumber(xEnd)) x = Math.min(x, xEnd);

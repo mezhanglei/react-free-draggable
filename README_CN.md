@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-2.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-3.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -37,7 +37,6 @@ import Draggable from 'react-free-draggable';
         axis="both"
         boundsParent=".boxs"
         // dragNode=".handle"
-        position={{ x: 10, y: 0 }}
         // grid={[100, 25]}
         scale={1}
         >
@@ -65,7 +64,8 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | 拖拽进行事件,renturn `false` 可以阻止该事件;                      |
 | onDragStop                    | `function`                        | -                                                  | 拖拽结束事件,renturn `false` 可以阻止该事件;                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
-| position                      | `{x: number, y: number}`          | -                                                  | 拖拽元素在父元素内的位置                                                                                  |
+| x                             | `number`                          | -                                                  | x轴位置                                                                                  |
+| y                             | `number`                          | -                                                  | y轴位置                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | 在boundsParent元素内部范围的限制拖拽范围                                                                                          |

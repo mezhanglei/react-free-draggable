@@ -12,7 +12,6 @@ const Home: React.FC<any> = (props) => {
                     axis="both"
                     boundsParent=".boxs"
                     // dragNode=".handle"
-                    position={{ x: 10, y: 0 }}
                     // grid={[100, 25]}
                     scale={1}
                 >

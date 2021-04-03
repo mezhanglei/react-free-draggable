@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-3.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-3.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -10,9 +10,10 @@
 
 # features
 
-- [x] 利用tranform实现元素拖拽移动,性能极高,流畅
+- [x] 利用tranform实现element元素或svg元素拖拽移动,性能极高,流畅
 - [x] 可设置拖拽边界`bounds`或通过设置父元素`boundsParent`来限制拖拽的范围,默认全屏拖拽
 - [x] 默认子元素children为拖拽元素,也可以通过设置`dragNode`来指定被拖拽的元素
+- [x] 被包裹的`props.children`的其他属性(非拖拽相关的属性)不会受到`react-free-draggable`影响.仍和没有被包裹一样.
 - [x] 提供完全足够的自由配置api,实现拖拽过程中的各种设定
 
 # 注意事项
@@ -69,7 +70,7 @@ import Draggable from 'react-free-draggable';
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | 在boundsParent元素内部范围的限制拖拽范围                                                                                          |
-| zIndexRange                   | `[number, number]`                | `[1, 10]`                                          | 拖拽时可设置的层级范围                                                                                          |
+| zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
 
 
 

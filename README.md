@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-3.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-3.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -13,6 +13,7 @@ Using the free drag and drop component of Transform, the drag process does not a
 - [x] Using `tranform` to realize element drag and drop movement, high performance, smooth
 - [x] You can set the drag bounds `bounds` or limit the scope of the drag by setting the parent element `boundsParent`. Full-screen drag is the default
 - [x] The default drag element `props.children`. You can also specify the element to be dragged by setting `dragNode`
+- [x] Other properties of the wrapped `props. children` (properties that are not drag related) are not affected by `react-free-draggable`. It's still the same as not being wrapped
 - [x] Provides fully sufficient free configuration API to implement various Settings during the drag and drop process
 
 # Matters
@@ -69,7 +70,7 @@ import Draggable from 'react-free-draggable';
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | The range within the boundsParent element                                                                                          |
-| zIndexRange                   | `[number, number]`                | `[1, 10]`                                          | The `zIndex` range that can be set when dragging and dropping                                                                                          |
+| zIndexRange                   | `[number, number]`                | `[]`                                               | The `zIndex` range that can be set when dragging and dropping                                                                                          |
 
 
 

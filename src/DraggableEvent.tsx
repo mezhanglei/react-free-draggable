@@ -72,8 +72,11 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
     };
 
     useEffect(() => {
+        const ownerDocument = findOwnerDocument();
+        const dragNode = findDragNode();
+        addEvent(dragNode, dragEventFor.start, handleDragStart);
         return () => {
-            const ownerDocument = findOwnerDocument();
+            removeEvent(dragNode, dragEventFor.start, handleDragStart);
             removeEvent(ownerDocument, dragEventFor.move, handleDrag);
             removeEvent(ownerDocument, dragEventFor.stop, handleDragStop);
             // 移除选中样式
@@ -118,7 +121,7 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         }
 
         // pc端鼠标操作时允许非左键操作
-        if (!allowAnyClick && !isEventTouch(e) && typeof e.button === 'number' && e.button !== 0) return false;
+        if (!allowAnyClick && !isEventTouch(e) && typeof e.button === 'number' && e.button !== 0) return;
         // 移动设备阻止默认行为
         if (e.type === 'touchstart') e.preventDefault();
 
@@ -153,6 +156,7 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
     };
 
     const handleDrag: EventHandler = (e) => {
+        if (!draggingRef.current) return;
         const boundsParent = findBoundsParent();
         e.preventDefault();
         // 获取在指定父元素内的位置
@@ -195,16 +199,16 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         if (!draggingRef.current || !eventDataRef.current) return;
         e.preventDefault();
         const ownerDocument = findOwnerDocument();
-       
+
         const shouldContinue = onDragStop && onDragStop(e, eventDataRef.current);
-        if (shouldContinue === false) return false;
+        if (shouldContinue === false) return;
 
         // 移除文本因滚动造成的显示
         if (ownerDocument) {
             // Remove user-select hack
             if (enableUserSelectHack) removeUserSelectStyles(ownerDocument);
         }
-
+        
         // 重置
         draggingRef.current = false;
 
@@ -215,10 +219,6 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
     };
 
     return React.cloneElement(React.Children.only(children), {
-        onMouseDown: handleDragStart,
-        onMouseUp: handleDragStop,
-        onTouchStart: handleDragStart,
-        onTouchEnd: handleDragStop,
         ref: nodeRef
     });
 });

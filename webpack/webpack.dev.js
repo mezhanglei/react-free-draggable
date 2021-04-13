@@ -164,7 +164,7 @@ module.exports = {
         contentBase: configs.root,
         index: configs.indexHtml,
         openPage: configs.openPage,
-        port: 8089,
+        port: 8088,
         host: getNetworkIp(),
         hot: true,
         inline: true,

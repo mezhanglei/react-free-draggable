@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-3.0.2-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-4.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -11,7 +11,7 @@
 # features
 
 - [x] 利用tranform实现element元素或svg元素拖拽移动,性能极高,流畅
-- [x] 可设置拖拽边界`bounds`或通过设置父元素`boundsParent`来限制拖拽的范围,默认全屏拖拽
+- [x] 可设置拖拽边界`bounds`来限制拖拽的范围,默认全屏拖拽
 - [x] 默认子元素children为拖拽元素,也可以通过设置`dragNode`来指定被拖拽的元素
 - [x] 被包裹的`props.children`的其他属性(非拖拽相关的属性)不会受到`react-free-draggable`影响.仍和没有被包裹一样.
 - [x] 提供完全足够的自由配置api,实现拖拽过程中的各种设定
@@ -36,7 +36,7 @@ import Draggable from 'react-free-draggable';
 <div className="boxs" style={{ display: 'inline-block', width: '500px', background: "red" }}>
     <Draggable
         axis="both"
-        boundsParent=".boxs"
+        bounds=".boxs"
         // dragNode=".handle"
         // grid={[100, 25]}
         scale={1}
@@ -58,7 +58,6 @@ import Draggable from 'react-free-draggable';
 | disabledNode                  | `string / HTMLElement`            | -                                                  | 不允许拖拽的选择器或元素                                                                              |
 | enableUserSelectHack          | `boolean`                         | -                                                  | 允许添加选中样式                                                  |
 | grid                          | `[number, number]`                | -                                                  | 设置x,y方向幅度，多少幅度移动一次目标                                                                              |
-| boundsParent                  | `string / HTMLElement`            | `body`                                             | 限制拖拽的父元素，默认body              |
 | disabled                      | `boolean`                         | -                                                  | 禁止拖拽                                                                                          |
 | allowAnyClick                 | `boolean`                         | -                                                  | 表示允许非鼠标左键单击拖动                                                                                          |
 | onDragStart                   | `function`                        | -                                                  | 拖拽开始事件, renturn `false` 可以阻止该事件;                                                                                           |
@@ -69,7 +68,7 @@ import Draggable from 'react-free-draggable';
 | y                             | `number`                          | -                                                  | y轴位置                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
-| bounds                        | `{xStart: number, xEnd: number, yStart: number, yEnd: number }` | -                    | 在boundsParent元素内部范围的限制拖拽范围                                                                                          |
+| bounds                        | ``string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | 在bounds内部范围的限制拖拽范围                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
 
 

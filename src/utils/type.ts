@@ -18,3 +18,26 @@ export function isNumber(data: any) {
 export function isString(data: any) {
     return getType(data) == '[object String]';
 }
+
+// 判断值是否为空
+export function isEmpty(value: any) {
+    if (Array.isArray(value)
+        || typeof value === 'string'
+        || value instanceof String
+    ) {
+        return value.length === 0;
+    }
+
+    if (value instanceof Map || value instanceof Set) {
+        return value.size === 0;
+    }
+
+    if (({}).toString.call(value) === '[object Object]') {
+        return Object.keys(value).length === 0;
+    }
+
+    if (value === undefined || value === null) {
+        return true;
+    }
+    return false;
+}

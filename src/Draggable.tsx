@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { createCSSTransform, createSVGTransform, getPositionByBounds, findElement } from './utils/dom';
-import { DraggableProps, EventData, EventHandler } from "./utils/types";
+import { createCSSTransform, createSVGTransform, getPositionByBounds } from './utils/dom';
+import { DraggableProps, DragData, EventHandler } from "./utils/types";
 import { isElementSVG } from "./utils/verify";
 import DraggableEvent from './DraggableEvent';
-import { filterObject } from "./utils/object";
 
 /**
  * 拖拽组件-回调处理(通过transform来控制元素拖拽, 不影响页面布局)
  */
- const Draggable = React.forwardRef<any, DraggableProps>((props, ref) => {
+const Draggable = React.forwardRef<any, DraggableProps>((props, ref) => {
 
     const {
         children,
@@ -31,22 +30,14 @@ import { filterObject } from "./utils/object";
     const slackXRef = useRef<number>(0);
     const slackYRef = useRef<number>(0);
 
-    const [eventData, setEventData] = useState<EventData>();
-    const eventDataRef = useRef<EventData>();
+    const [eventData, setEventData] = useState<DragData>();
+    const eventDataRef = useRef<DragData>();
 
     const axisRef = useRef<string>("both");
 
     const wrapClassName = "react-draggable";
     const wrapClassNameDragging = "react-draggable-dragging";
     const wrapClassNameDragged = "react-draggable-dragged";
-
-    // 限制范围的父元素
-    const findBoundsParent = () => {
-        const { boundsParent } = DraggableEventProps;
-        const ownerDocument = boundsParent && findElement(boundsParent);
-        const node = (boundsParent && findElement(boundsParent)) || ownerDocument?.body || ownerDocument?.documentElement;
-        return node;
-    };
 
     // 更新x,y
     useEffect(() => {
@@ -60,15 +51,15 @@ import { filterObject } from "./utils/object";
 
     // 更新axis
     useEffect(() => {
-        axisRef.current = props?.axis;
+       if(props?.axis) axisRef.current = props?.axis;
     }, [props?.axis])
 
-    const eventDataChange = (value: EventData) => {
+    const eventDataChange = (value: DragData) => {
         eventDataRef.current = value;
         setEventData(value);
     }
 
-    const eventDataUpdate = (eventData: EventData | undefined, data: any) => {
+    const eventDataUpdate = (eventData: DragData | undefined, data: any) => {
         eventData = eventData || {
             deltaX: 0,
             deltaY: 0,
@@ -84,8 +75,9 @@ import { filterObject } from "./utils/object";
     const onDragStart: EventHandler = (e, data) => {
         e.stopImmediatePropagation();
         if (!data) return;
+
         // 如果onDragStart函数返回false则禁止拖拽
-        const shouldStart = props.onDragStart && props.onDragStart(e, data);
+        const shouldStart = props.onDragStart && props.onDragStart(e, eventDataRef.current);
         if (shouldStart === false) return;
 
         draggingRef.current = true;
@@ -119,15 +111,14 @@ import { filterObject } from "./utils/object";
         let nowY = eventData?.y;
 
         // 运动边界限制
-        if (bounds || DraggableEventProps.boundsParent) {
+        if (bounds) {
             nowX += slackXRef.current;
             nowY += slackYRef.current;
 
             // 边界处理
             const node = data?.node;
-            const parent = findBoundsParent();
 
-            const newPosition = getPositionByBounds(node, parent, { x: nowX, y: nowY }, bounds);
+            const newPosition = getPositionByBounds(node, { x: nowX, y: nowY }, bounds);
             nowX = newPosition.x;
             nowY = newPosition.y;
 
@@ -154,9 +145,10 @@ import { filterObject } from "./utils/object";
 
         eventDataRef.current = {
             ...eventDataRef.current,
+            deltaX: 0,
+            deltaY: 0,
             zIndex: zIndexRange[0]
         }
-
         // Short-circuit if user's callback killed it.
         const shouldContinue = props.onDragStop && props.onDragStop(e, eventDataRef.current);
         if (shouldContinue === false) return;
@@ -188,22 +180,16 @@ import { filterObject } from "./utils/object";
         x: eventData?.x || 0,
         y: eventData?.y || 0
     };
-    
+
     // React.Children.only限制只能传递一个child
     return (
         <DraggableEvent ref={ref} {...DraggableEventProps} onDragStart={onDragStart} onDrag={onDrag} onDragStop={onDragStop}>
             {React.cloneElement(React.Children.only(children), {
                 className: cls,
                 style: {
-                    ...filterObject(children.props.style, (item) => item != undefined),
-                    ...filterObject(style, (item) => item != undefined),
-                    ...(
-                        !isSVG ? createCSSTransform(currentPosition, positionOffset)
-                            :
-                            {
-                                transform: style?.transform ?? (children.props.style?.transform || "")
-                            }
-                    ),
+                    ...children.props.style,
+                    ...style,
+                    transform: !isSVG ? createCSSTransform(currentPosition, positionOffset) : style?.transform ?? (children.props.style?.transform || ""),
                     zIndex: eventData?.zIndex ?? style?.zIndex ?? children.props.style?.zIndex
                 },
                 transform: isSVG ? createSVGTransform(currentPosition, positionOffset) : (props?.transform ?? (children.props?.transform || "")),
@@ -212,5 +198,4 @@ import { filterObject } from "./utils/object";
     );
 });
 
-export default Draggable;
-
+export default React.memo(Draggable);

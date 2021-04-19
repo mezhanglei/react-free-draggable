@@ -1,6 +1,4 @@
-import { getPrefixStyle } from "./cssPrefix";
-import { isDom, isNumber } from "./type";
-import { CSSProperties } from "react";
+import { isDom, isEmpty, isNumber } from "./type";
 import { BoundsInterface } from "./types";
 
 // 添加选中类和样式
@@ -72,21 +70,22 @@ export interface PositionInterface {
     x: number,
     y: number
 }
-// 接收增量位置，返回新的transform值
+// 接收偏移位置，返回新的transform值
 export function getTranslation(current: PositionInterface, positionOffset: PositionInterface | undefined, unit: string): string {
-    let translation = `translate(${current.x}${unit},${current.y}${unit})`;
+    let translation = `translate3d(${current.x}${unit},${current.y}${unit}, 0)`;
+    
     if (positionOffset) {
-        const defaultX = `${(typeof positionOffset.x === 'string') ? positionOffset.x : positionOffset.x + unit}`;
-        const defaultY = `${(typeof positionOffset.y === 'string') ? positionOffset.y : positionOffset.y + unit}`;
-        translation = `translate(${defaultX}, ${defaultY})` + translation;
+        const offsetX = `${(typeof positionOffset.x === 'string') ? positionOffset.x : positionOffset.x + unit}`;
+        const offsetY = `${(typeof positionOffset.y === 'string') ? positionOffset.y : positionOffset.y + unit}`;
+        translation = `translate3d(${offsetX},${offsetY}, 0)`; + translation;
     }
     return translation;
 }
 
 // 设置css的transform
-export function createCSSTransform(current: PositionInterface, positionOffset?: PositionInterface | undefined): CSSProperties {
+export function createCSSTransform(current: PositionInterface, positionOffset?: PositionInterface | undefined): string {
     const translation = getTranslation(current, positionOffset, 'px');
-    return { [getPrefixStyle('transform')]: translation };
+    return translation;
 }
 
 // 设置svg的transform
@@ -128,16 +127,11 @@ export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterfa
 }
 
 // 元素在父元素限制范围下的位置
-export function getPositionByBounds(node: HTMLElement, parent: any, position: PositionInterface, bounds?: BoundsInterface): PositionInterface {
+export function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface {
 
-    // 限制父元素
-    const boundsParent: HTMLElement = findElement(parent);
-
-    if (!getBoundsInParent(node, boundsParent)) {
-        return position;
-    }
-
-    const resultBounds = { ...getBoundsInParent(node, boundsParent), ...bounds };
+    if(isEmpty(bounds)) return position;
+    
+    const resultBounds = findElement(bounds) ? getBoundsInParent(node, findElement(bounds)) : bounds;
     const { xStart = 0, yStart = 0, xEnd = 0, yEnd = 0 } = resultBounds;
     let { x, y } = position;
 
@@ -249,6 +243,10 @@ export function getScroll(el: HTMLElement = (document.body || document.documentE
  * @param el 元素或事件对象
  * @param parent 父元素
  */
+ export interface SizeInterface {
+    x: number;
+    y: number;
+}
 export function getClientXYInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | SizeInterface {
     let pos = null;
     if ("clientX" in el) {

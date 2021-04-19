@@ -10,7 +10,7 @@ const Home: React.FC<any> = (props) => {
             <div className="boxs" style={{ display: 'inline-block', width: '500px', background: "red" }}>
                 <Draggable
                     axis="both"
-                    boundsParent=".boxs"
+                    bounds=".boxs"
                     // dragNode=".handle"
                     // grid={[100, 25]}
                     scale={1}

@@ -68,7 +68,7 @@ import Draggable from 'react-free-draggable';
 | y                             | `number`                          | -                                                  | 在父容器内受控的y轴位置                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
-| bounds                        | ``string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | 在bounds内部范围的限制拖拽范围                                                                                          |
+| bounds                        | `string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | 在bounds内部范围的限制拖拽范围                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
 
 

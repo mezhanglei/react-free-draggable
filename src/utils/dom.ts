@@ -130,11 +130,10 @@ export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterfa
 export function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface {
 
     if(isEmpty(bounds)) return position;
-    
+
     const resultBounds = findElement(bounds) ? getBoundsInParent(node, findElement(bounds)) : bounds;
     const { xStart = 0, yStart = 0, xEnd = 0, yEnd = 0 } = resultBounds;
     let { x, y } = position;
-
     if (isNumber(xEnd)) x = Math.min(x, xEnd);
     if (isNumber(yEnd)) y = Math.min(y, yEnd);
     if (isNumber(xStart)) x = Math.max(x, xStart);
@@ -147,7 +146,7 @@ export function getPositionByBounds(node: HTMLElement, position: PositionInterfa
  * 接收类名或节点，返回节点
  * @param target 目标参数
  */
-export const findElement = (target: string | HTMLElement): any => {
+export const findElement = (target: any): any => {
     let result = null;
     if (typeof target === "string") {
         result = document.querySelector(target);

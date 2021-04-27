@@ -39,7 +39,7 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
     const nodeRef = useRef<any>();
 
 
-    useImperativeHandle(ref, () => (nodeRef.current));
+    useImperativeHandle(ref, () => (nodeRef?.current));
 
     // 顶层document对象（有的环境可能删除了document顶层环境）
     const findOwnerDocument = () => {
@@ -114,7 +114,7 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         const lastEventX = eventDataRef?.current?.lastEventX ?? x;
         const lastEventY = eventDataRef?.current?.lastEventY ?? y;
         eventDataRef.current = {
-            node: dragNode,
+            node: nodeRef.current,
             deltaX: 0,
             deltaY: 0,
             lastEventX: lastEventX,
@@ -161,9 +161,9 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         // 返回事件对象相关的位置信息
         const lastEventX = eventDataRef?.current?.lastEventX ?? x;
         const lastEventY = eventDataRef?.current?.lastEventY ?? y;
-        const dragNode = findDragNode();
+
         eventDataRef.current = {
-            node: dragNode,
+            node: nodeRef?.current,
             deltaX: x - lastEventX,
             deltaY: y - lastEventY,
             lastEventX: lastEventX,

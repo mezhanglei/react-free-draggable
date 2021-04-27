@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-4.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-5.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -64,8 +64,8 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | the dragging event, renturn `false` can stop it;                      |
 | onDragStop                    | `function`                        | -                                                  | the end event, renturn `false` can stop it;                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
-| x                             | `number`                          | -                                                  | position in x axis                                                                                  |
-| y                             | `number`                          | -                                                  | position in y axis                                                                                  |
+| x                             | `number`                          | -                                                  | position of `x` axis in `bounds `parent                                                                                  |
+| y                             | `number`                          | -                                                  | position of `y` axis in `bounds `parent                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | The range within the element                                                                                          |

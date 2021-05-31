@@ -12,7 +12,6 @@ Using the free drag and drop component of Transform, the drag process does not a
 
 - [x] Using `tranform` to realize element drag and drop movement, high performance, smooth
 - [x] You can set the drag bounds `bounds` to limit the scope of the drag by setting the parent element, Full-screen drag is the default
-- [x] The default drag element `props.children`. You can also specify the element to be dragged by setting `dragNode`
 - [x] Other properties of the wrapped `props. children` (properties that are not drag related) are not affected by `react-free-draggable`. It's still the same as not being wrapped
 - [x] Provides fully sufficient free configuration API to implement various Settings during the drag and drop process
 

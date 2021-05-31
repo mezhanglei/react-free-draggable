@@ -12,7 +12,6 @@
 
 - [x] 利用tranform实现element元素或svg元素拖拽移动,性能极高,流畅
 - [x] 可设置拖拽边界`bounds`来限制拖拽的范围,默认全屏拖拽
-- [x] 默认子元素children为拖拽元素,也可以通过设置`dragNode`来指定被拖拽的元素
 - [x] 被包裹的`props.children`的其他属性(非拖拽相关的属性)不会受到`react-free-draggable`影响.仍和没有被包裹一样.
 - [x] 提供完全足够的自由配置api,实现拖拽过程中的各种设定
 

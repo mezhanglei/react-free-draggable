@@ -73,7 +73,7 @@ export interface PositionInterface {
 // 接收偏移位置，返回新的transform值
 export function getTranslation(current: PositionInterface, positionOffset: PositionInterface | undefined, unit: string): string {
     let translation = `translate3d(${current.x}${unit},${current.y}${unit}, 0)`;
-    
+
     if (positionOffset) {
         const offsetX = `${(typeof positionOffset.x === 'string') ? positionOffset.x : positionOffset.x + unit}`;
         const offsetY = `${(typeof positionOffset.y === 'string') ? positionOffset.y : positionOffset.y + unit}`;
@@ -129,7 +129,7 @@ export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterfa
 // 元素在父元素限制范围下的位置
 export function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface {
 
-    if(isEmpty(bounds)) return position;
+    if (isEmpty(bounds)) return position;
 
     const resultBounds = findElement(bounds) ? getBoundsInParent(node, findElement(bounds)) : bounds;
     const { xStart = 0, yStart = 0, xEnd = 0, yEnd = 0 } = resultBounds;
@@ -237,16 +237,17 @@ export function getScroll(el: HTMLElement = (document.body || document.documentE
     }
 };
 
-/**
- * 返回元素或事件对象相对于父元素的窗口位置
- * @param el 元素或事件对象
- * @param parent 父元素
- */
- export interface SizeInterface {
+
+export interface SizeInterface {
     x: number;
     y: number;
 }
-export function getClientXYInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | SizeInterface {
+/**
+ * 返回元素或事件对象相对于父元素的真实位置
+ * @param el 元素或事件对象
+ * @param parent 父元素
+ */
+export function getPositionInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | SizeInterface {
     let pos = null;
     if ("clientX" in el) {
         pos = {
@@ -269,25 +270,6 @@ export function getClientXYInParent(el: MouseEvent | TouchEvent | HTMLElement, p
 
     return pos;
 }
-
-/**
- * 获取元素或事件对象的相对于父元素的真实位置 = 可视位置 - 父元素的可视位置 + 父元素的卷曲滚动距离
- * @param el 元素或事件对象
- * @param parent 父元素
- */
-export function getPositionInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | SizeInterface {
-    const clientXY = getClientXYInParent(el, parent);
-    const scroll = getScroll(parent);
-    let pos = null;
-    if (clientXY) {
-        pos = {
-            x: clientXY.x + (scroll?.x || 0),
-            y: clientXY.y + (scroll?.y || 0),
-        }
-    }
-
-    return pos;
-};
 
 /**
  * 查询元素是否在某个元素内

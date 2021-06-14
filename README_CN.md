@@ -69,6 +69,7 @@ import Draggable from 'react-free-draggable';
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | 在bounds内部范围的限制拖拽范围                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
+| isReflow                   | `boolean`                | -                                               | 当子元素发生非拖拽行为导致的位置变换需要设置为true，用来纠偏                                                                                          |
 
 
 

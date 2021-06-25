@@ -80,7 +80,7 @@ export interface DraggableProps {
     className?: string;
     style?: CSSProperties;
     transform?: string;
-    isReflow?: boolean; // 拖拽过程中是否发生位置变化
+    reset?: boolean; // 非拖拽引起的位置变化，需要设置为true重新初始化位置
     onDragStart?: DragHandler; // 拖拽开始事件
     onDrag?: DragHandler; // 拖拽进行事件
     onDragStop?: DragHandler; // 拖拽结束事件

@@ -69,7 +69,7 @@ import Draggable from 'react-free-draggable';
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | The range within the element                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | The `zIndex` range that can be set when dragging and dropping                                                                                          |
-| isReflow                   | `boolean`                | -                                               | it need set `true` when the children is update but not drag                                                                                          |
+| reset                   | `boolean`                | -                                               | it need set `true` when the children is update but not drag                                                                                          |
 
 
 

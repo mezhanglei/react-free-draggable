@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-5.0.3-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -19,7 +19,8 @@
 
 1. 子元素不能为行内(inline)类型元素,因为transform对行内元素无效!
 2. `props.children`限制为单个闭合标签!
-2. `DraggableEvent`组件为事件处理组件,提供给开发者在移动目标时事件对象处理的灵活api实现一些定制行为.
+3. `DraggableEvent`组件为事件处理组件,提供给开发者在移动目标时事件对象处理的灵活api实现一些定制行为.
+4. 组件的拖拽事件涉及的位置均以页面最左上角为参考坐标系.
 
 ### 快速安装
 ```
@@ -63,14 +64,11 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | 拖拽进行事件,renturn `false` 可以阻止该事件;                      |
 | onDragStop                    | `function`                        | -                                                  | 拖拽结束事件,renturn `false` 可以阻止该事件;                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
-| x                             | `number`                          | -                                                  | 在父容器内受控的x轴位置                                                                                  |
-| y                             | `number`                          | -                                                  | 在父容器内受控的y轴位置                                                                                  |
+| x                             | `number`                          | -                                                  | 在页面内的受控x轴位置，参考点页面左上角位置                                                                                  |
+| y                             | `number`                          | -                                                  | 在页面内受控的y轴位置，参考点页面左上角位置                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
-| bounds                        | `string / HTMLElement / {xStart: number, xEnd: number, yStart: number, yEnd: number }` | `body`                    | 在bounds内部范围的限制拖拽范围                                                                                          |
+| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string | HTMLElement }`                    | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
-| reset                   | `boolean`                | -                                               | 非拖拽但位置改变了，需设置true重新初始化位置                                                                                          |
-
-
 
 

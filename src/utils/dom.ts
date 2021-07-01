@@ -1,5 +1,5 @@
 import { isDom, isEmpty, isNumber } from "./type";
-import { BoundsInterface } from "./types";
+import { PositionType } from "./types";
 
 // 添加选中类和样式
 export const addUserSelectStyles = (doc: any): any => {
@@ -94,10 +94,10 @@ export function createSVGTransform(current: PositionInterface, positionOffset?: 
     return translation;
 }
 
-// 返回目标元素相对于父元素内的视口范围
-export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterface | undefined {
+// 返回目标元素被父元素限制的位置范围
+export function getBoundsInParent(node: HTMLElement, bounds: any) {
     // 限制父元素
-    const boundsParent: HTMLElement = findElement(parent);
+    const boundsParent: HTMLElement = findElement(bounds) || findElement(bounds?.boundsParent);
 
     if (!isDom(node) || !isDom(boundsParent)) {
         return;
@@ -115,29 +115,46 @@ export function getBoundsInParent(node: HTMLElement, parent: any): BoundsInterfa
     const parentInnerHeight = boundsParent.clientHeight;
 
     // 大小差距
-    const xDiff = parentInnerWidth - nodeOutWidth;
-    const yDiff = parentInnerHeight - nodeOutHeight;
+    const xDiff = parentInnerWidth - nodeOutWidth > 0 ? parentInnerWidth - nodeOutWidth : 0;
+    const yDiff = parentInnerHeight - nodeOutHeight > 0 ? parentInnerHeight - nodeOutHeight : 0;
 
-    return {
-        xStart: 0,
-        xEnd: xDiff > 0 ? xDiff : 0,
-        yStart: 0,
-        yEnd: yDiff > 0 ? yDiff : 0
-    };
+    // 容器的页面位置
+    const parentXY = getPositionInPage(boundsParent);
+
+    if (parentXY) {
+        // 当限制为元素选择器或元素时，位置限制该元素内部
+        if (findElement(bounds)) {
+            return {
+                left: parentXY?.x,
+                right: xDiff + parentXY?.x,
+                top: parentXY?.y,
+                bottom: yDiff + parentXY?.y
+            };
+            // 当限制为某个元素内的某个范围，则计算该范围内的限制位置
+        } else {
+            return {
+                left: Math.max(0, bounds?.left || 0) + parentXY?.x,
+                right: Math.min(xDiff, bounds?.right || 0) + parentXY?.x,
+                top: Math.max(0, bounds?.top || 0) + parentXY?.y,
+                bottom: Math.min(yDiff, bounds?.bottom || 0) + parentXY?.y
+            }
+        }
+    }
 }
 
-// 元素在父元素限制范围下的位置
+// 元素在父元素限制范围下的可视位置
 export function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface {
 
     if (isEmpty(bounds)) return position;
 
-    const resultBounds = findElement(bounds) ? getBoundsInParent(node, findElement(bounds)) : bounds;
-    const { xStart = 0, yStart = 0, xEnd = 0, yEnd = 0 } = resultBounds;
+    let resultBounds = getBoundsInParent(node, bounds);
+    if (!resultBounds) return position;
+    const { left, top, right, bottom } = resultBounds;
     let { x, y } = position;
-    if (isNumber(xEnd)) x = Math.min(x, xEnd);
-    if (isNumber(yEnd)) y = Math.min(y, yEnd);
-    if (isNumber(xStart)) x = Math.max(x, xStart);
-    if (isNumber(yStart)) y = Math.max(y, yStart);
+    if (isNumber(right)) x = Math.min(x, right);
+    if (isNumber(bottom)) y = Math.min(y, bottom);
+    if (isNumber(left)) x = Math.max(x, left);
+    if (isNumber(top)) y = Math.max(y, top);
 
     return { x, y };
 }
@@ -212,64 +229,46 @@ export function removeEvent(el: any, event: string, handler: (...rest: any[]) =>
     }
 }
 
-/**
- * 获取页面或元素的卷曲滚动(兼容写法)
- * @param el 目标元素
- */
-export interface ScrollInterface {
-    x: number;
-    y: number;
-}
-export function getScroll(el: HTMLElement = (document.body || document.documentElement)): undefined | ScrollInterface {
-    if (!isDom(el)) {
-        return;
-    }
-    if (el === document.body || el === document.documentElement) {
-        const doc = el.ownerDocument; // 节点所在document对象
-        const win: any = doc.defaultView; // 包含document的window对象
-        const x = doc.documentElement.scrollLeft || win.pageXOffset || doc.body.scrollLeft;
-        const y = doc.documentElement.scrollTop || win.pageYOffset || doc.body.scrollTop;
-        return { x, y };
-    } else {
-        const x = el.scrollLeft;
-        const y = el.scrollTop;
-        return { x, y };
-    }
-};
-
-
-export interface SizeInterface {
-    x: number;
-    y: number;
-}
-/**
- * 返回元素或事件对象相对于父元素的真实位置
- * @param el 元素或事件对象
- * @param parent 父元素
- */
-export function getPositionInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | SizeInterface {
+// 返回元素或事件对象的可视位置
+export function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | PositionType {
     let pos = null;
     if ("clientX" in el) {
         pos = {
-            x: el?.clientX - parent.getBoundingClientRect().left,
-            y: el?.clientY - parent.getBoundingClientRect().top
+            x: el.clientX,
+            y: el.clientY
         };
     } else if ("touches" in el) {
         if (el?.touches[0]) {
             pos = {
-                x: el?.touches[0]?.clientX - parent.getBoundingClientRect().left,
-                y: el?.touches[0]?.clientY - parent.getBoundingClientRect().top
+                x: el.touches[0]?.clientX,
+                y: el.touches[0]?.clientY
             };
         }
     } else if (isDom(el)) {
         pos = {
-            x: el.getBoundingClientRect().left - parent.getBoundingClientRect().left,
-            y: el.getBoundingClientRect().top - parent.getBoundingClientRect().top
+            x: el.getBoundingClientRect().left,
+            y: el.getBoundingClientRect().top
         };
     }
-
     return pos;
 }
+
+/**
+ * 获取元素或事件对象的相对于页面的真实位置 = 滚动 + 可视位置
+ * @param el 元素或事件对象
+ */
+export function getPositionInPage(el: MouseEvent | TouchEvent | HTMLElement): null | PositionType {
+    const clientXY = getClientXY(el);
+    const parentXY = getClientXY(document.body || document.documentElement);
+    let pos = null;
+    if (clientXY && parentXY) {
+        pos = {
+            x: clientXY.x - parentXY?.x,
+            y: clientXY.y - parentXY?.y
+        }
+    }
+    return pos;
+};
 
 /**
  * 查询元素是否在某个元素内

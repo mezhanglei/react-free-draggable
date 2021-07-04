@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -68,8 +68,9 @@ import Draggable from 'react-free-draggable';
 | y                             | `number`                          | -                                                  | position of `y` axis in page;                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
-| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string | HTMLElement }`                    | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `boundsParent` element                                                                                          |
+| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                    | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `boundsParent` element                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | The `zIndex` range that can be set when dragging and dropping                                                                                          |
+| reset                   | `boolean`                | -                                               | reset to `transform: translate3d(0,0,0);`                                 |
 
 
 

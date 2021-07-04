@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.0.1-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.2-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -68,7 +68,7 @@ import Draggable from 'react-free-draggable';
 | y                             | `number`                          | -                                                  | 在页面内受控的y轴位置，参考点页面左上角位置                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
-| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                    | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
+| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
 | reset                   | `boolean`                | -                                               | 重置状态为 `transform: translate3d(0,0,0);`                                 |
 

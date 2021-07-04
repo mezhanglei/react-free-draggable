@@ -8,7 +8,7 @@ import DraggableEvent from './DraggableEvent';
 /**
  * 拖拽组件-回调处理(通过transform来控制元素拖拽, 不影响页面布局)
  */
-const Draggable = React.forwardRef<any, DraggableProps>((props, ref) => {
+ const Draggable = React.forwardRef<any, DraggableProps>((props, ref) => {
 
     const {
         children,
@@ -18,6 +18,7 @@ const Draggable = React.forwardRef<any, DraggableProps>((props, ref) => {
         positionOffset,
         bounds,
         zIndexRange = [],
+        reset,
         className,
         style,
         ...DraggableEventProps
@@ -59,14 +60,17 @@ const Draggable = React.forwardRef<any, DraggableProps>((props, ref) => {
         if (x !== undefined && y !== undefined && initXY && !draggingRef.current) {
             const lastX = initXY?.x;
             const lastY = initXY?.y;
-            // 初始化传值时根据限制重新计算该值
+            // 初始化传值时根据限制重新计算该值(这里看看要不要仅初始化时限制位置)
             const newX = eventDataRef.current?.x === undefined ? getPositionByBounds(nodeRef.current, { x, y }, bounds)?.x : x;
             const newY = eventDataRef.current?.y === undefined ? getPositionByBounds(nodeRef.current, { x, y }, bounds)?.y : y;
             const translateX = newX - lastX;
             const translateY = newY - lastY;
             eventDataUpdate(eventDataRef.current, { x: newX, y: newY, lastX: newX, lastY: newY, translateX, translateY });
         }
-    }, [x, y, initXY, bounds, draggingRef.current]);
+        if (x !== undefined && y !== undefined && reset) {
+            setInitXY({ x, y });
+        }
+    }, [x, y, initXY?.x, initXY?.y, reset, bounds, draggingRef.current]);
 
     // 更新axis
     useEffect(() => {

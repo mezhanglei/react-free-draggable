@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.0.2-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.3-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -60,9 +60,9 @@ import Draggable from 'react-free-draggable';
 | grid                          | `[number, number]`                | -                                                  | Set X, Y direction amplitude, how much to move the target                                                                              |
 | disabled                      | `boolean`                         | -                                                  | disabled drag                                                                                          |
 | allowAnyClick                 | `boolean`                         | -                                                  | Indicates that drag is allowed without a left mouse click                                                                                          |
-| onDragStart                   | `function`                        | -                                                  | the start event, renturn `false` can stop it;                                                                                        |
-| onDrag                        | `function`                        | -                                                  | the dragging event, renturn `false` can stop it;                      |
-| onDragStop                    | `function`                        | -                                                  | the end event, renturn `false` can stop it;                                                                                  |
+| onDragStart                   | `function`                        | -                                                  | the start event                                                                                        |
+| onDrag                        | `function`                        | -                                                  | the dragging event                      |
+| onDragStop                    | `function`                        | -                                                  | the end event                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
 | x                             | `number`                          | -                                                  | position of `x` axis refer to init position to change `transform`                                                                                  |
 | y                             | `number`                          | -                                                  | position of `y` axis refer to init position to change `transform`                                                                                  |

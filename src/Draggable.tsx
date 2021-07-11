@@ -1,7 +1,7 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { createCSSTransform, createSVGTransform, getPositionByBounds, getPositionInPage } from './utils/dom';
-import { DraggableProps, DragData, EventHandler, PositionType } from "./utils/types";
+import { DraggableProps, DragData, EventHandler, PositionType, AxisType } from "./utils/types";
 import { isElementSVG } from "./utils/verify";
 import DraggableEvent from './DraggableEvent';
 
@@ -38,7 +38,7 @@ import DraggableEvent from './DraggableEvent';
     // 拖拽的初始位置
     const [initXY, setInitXY] = useState<PositionType>();
 
-    const axisRef = useRef<string>("both");
+    const axisRef = useRef<string>(AxisType.both);
 
     const wrapClassName = "react-draggable";
     const wrapClassNameDragging = "react-draggable-dragging";
@@ -118,14 +118,13 @@ import DraggableEvent from './DraggableEvent';
             node
         }
 
-        // 如果onDragStart函数返回false则禁止拖拽
-        const shouldStart = props.onDragStart && props.onDragStart(e, eventData);
-        if (shouldStart === false) return;
-
         draggingRef.current = true;
         setDragged(true);
         setIsSVG(isElementSVG(data?.node));
         eventData && eventDataChange(eventData);
+
+        // 如果onDragStart函数返回false则禁止拖拽
+        props.onDragStart && props.onDragStart(e, eventData);
     };
 
     const onDrag: EventHandler = (e, data) => {
@@ -183,9 +182,9 @@ import DraggableEvent from './DraggableEvent';
             eventData.deltaY = nowY - (eventDataRef.current?.y || 0);
         }
 
-        const shouldUpdate = props.onDrag && props.onDrag(e, eventData);
-        if (shouldUpdate === false) return;
         eventData && eventDataChange(eventData);
+
+        props.onDrag && props.onDrag(e, eventData);
     };
 
     const onDragStop: EventHandler = (e, data) => {
@@ -197,15 +196,13 @@ import DraggableEvent from './DraggableEvent';
             deltaY: 0,
             zIndex: zIndexRange[0]
         }
-        // Short-circuit if user's callback killed it.
-        const shouldContinue = props.onDragStop && props.onDragStop(e, eventDataRef.current);
-        if (shouldContinue === false) return;
-
         draggingRef.current = false;
         slackXRef.current = 0;
         slackYRef.current = 0;
-
         eventDataRef.current && eventDataChange(eventDataRef.current);
+        
+        // Short-circuit if user's callback killed it.
+        props.onDragStop && props.onDragStop(e, eventDataRef.current);
     };
 
 
@@ -216,11 +213,11 @@ import DraggableEvent from './DraggableEvent';
     });
 
     const canDragX = () => {
-        return axisRef.current === 'both' || axisRef.current === 'x';
+        return axisRef.current === AxisType.both || axisRef.current === AxisType.x;
     };
 
     const canDragY = () => {
-        return axisRef.current === 'both' || axisRef.current === 'y';
+        return axisRef.current === AxisType.both || axisRef.current === AxisType.y;
     };
 
     // 当前位置

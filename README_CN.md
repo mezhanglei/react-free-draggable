@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.0.2-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.3-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -10,7 +10,7 @@
 
 # features
 
-- [x] 利用tranform实现element元素或svg元素拖拽移动,性能极高,流畅
+- [x] 利用tranform实现element元素或svg元素拖拽移动,性能高,流畅
 - [x] 可设置拖拽边界`bounds`来限制拖拽的范围,默认全屏拖拽
 - [x] 被包裹的`props.children`的其他属性(非拖拽相关的属性)不会受到`react-free-draggable`影响.仍和没有被包裹一样.
 - [x] 提供完全足够的自由配置api,实现拖拽过程中的各种设定
@@ -60,9 +60,9 @@ import Draggable from 'react-free-draggable';
 | grid                          | `[number, number]`                | -                                                  | 设置x,y方向幅度，多少幅度移动一次目标                                                                              |
 | disabled                      | `boolean`                         | -                                                  | 禁止拖拽                                                                                          |
 | allowAnyClick                 | `boolean`                         | -                                                  | 表示允许非鼠标左键单击拖动                                                                                          |
-| onDragStart                   | `function`                        | -                                                  | 拖拽开始事件, renturn `false` 可以阻止该事件;                                                                                           |
-| onDrag                        | `function`                        | -                                                  | 拖拽进行事件,renturn `false` 可以阻止该事件;                      |
-| onDragStop                    | `function`                        | -                                                  | 拖拽结束事件,renturn `false` 可以阻止该事件;                                                                                  |
+| onDragStart                   | `function`                        | -                                                  | 拖拽开始事件                                                                                           |
+| onDrag                        | `function`                        | -                                                  | 拖拽进行事件                      |
+| onDragStop                    | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
 | x                             | `number`                          | -                                                  | 受控x轴位置，相对于初始位置为参考点改变`transform`属性                                                                                  |
 | y                             | `number`                          | -                                                  | 受控y轴位置，相对于初始位置为参考点改变`transform`属性                                                                                  |

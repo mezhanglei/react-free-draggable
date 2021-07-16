@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
-import { matchParent, addEvent, removeEvent, getPositionInPage, findElement, addUserSelectStyles, removeUserSelectStyles, snapToGrid } from "./utils/dom";
+import { matchParent, addEvent, removeEvent, getPositionInParent, findElement, addUserSelectStyles, removeUserSelectStyles, snapToGrid } from "./utils/dom";
 import { isMobile, isEventTouch } from "./utils/verify";
 import { DraggableEventProps, EventData, EventType } from "./utils/types";
 
@@ -33,7 +33,8 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         allowAnyClick,
         disabled,
         enableUserSelectHack,
-        grid
+        grid,
+        locationParent
     } = props;
 
     let draggingRef = useRef<boolean>(false);
@@ -48,6 +49,12 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         const node = nodeRef?.current;
         return node?.ownerDocument;
     };
+
+    // 获取定位父元素, 涉及的位置相对于该父元素
+    const getLocationParent = () => {
+        const parent = findElement(locationParent) || document.body || document.documentElement;
+        return parent;
+    }
 
     // 拖拽句柄
     const findDragNode = () => {
@@ -102,9 +109,10 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
             return;
         }
 
-        // 可视位置
-        const positionXY = getPositionInPage(e);
-        if(!positionXY) return;
+        // locationParent内的位置
+        const parent = getLocationParent();
+        const positionXY = getPositionInParent(e, parent);
+        if (!positionXY) return;
         const positionX = positionXY?.x;
         const positionY = positionXY?.y;
 
@@ -141,9 +149,10 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
     const handleDrag = (e: EventType) => {
         if (!draggingRef.current) return;
         e.preventDefault();
-        // 可视位置
-        const positionXY = getPositionInPage(e);
-        if(!positionXY) return;
+        // locationParent内的位置
+        const parent = getLocationParent();
+        const positionXY = getPositionInParent(e, parent);
+        if (!positionXY) return;
         let positionX = positionXY?.x;
         let positionY = positionXY?.y;
 

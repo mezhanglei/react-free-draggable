@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.0.3-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.4-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -20,7 +20,7 @@
 1. 子元素不能为行内(inline)类型元素,因为transform对行内元素无效!
 2. `props.children`限制为单个闭合标签!
 3. `DraggableEvent`组件为事件处理组件,提供给开发者在移动目标时事件对象处理的灵活api实现一些定制行为.
-4. 组件的拖拽事件涉及的位置均以页面最左上角为参考坐标系.
+4. 组件的拖拽事件涉及的位置均以`bounds`的父元素为参考坐标系.
 
 ### 快速安装
 ```
@@ -64,8 +64,8 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | 拖拽进行事件                      |
 | onDragStop                    | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
-| x                             | `number`                          | -                                                  | 受控x轴位置，相对于初始位置为参考点改变`transform`属性                                                                                  |
-| y                             | `number`                          | -                                                  | 受控y轴位置，相对于初始位置为参考点改变`transform`属性                                                                                  |
+| x                             | `number`                          | -                                                  | 受控x轴位置，相对于`bounds`的父元素为参考点改变`transform`属性                                                                                  |
+| y                             | `number`                          | -                                                  | 受控y轴位置，相对于`bounds`父元素为参考点改变`transform`属性                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |

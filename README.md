@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.0.3-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.4-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -20,7 +20,7 @@ Using the free drag and drop component of Transform, the drag process does not a
 1. The child element cannot be an inline element because transform does not work on inline elements!
 2. `props. Children` limited to a single closed tag!
 3. The `DraggableEvent` component is an event handling component that provides developers with the ability to handle event;
-4. The events of the component relative to positions is the top left corner of the page;
+4. The events of the component relative to positions is the `bounds` parent;
 
 ### install
 ```
@@ -64,8 +64,8 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | the dragging event                      |
 | onDragStop                    | `function`                        | -                                                  | the end event                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
-| x                             | `number`                          | -                                                  | position of `x` axis relative to init position to change `transform`                                                                                  |
-| y                             | `number`                          | -                                                  | position of `y` axis relative to init position to change `transform`                                                                                  |
+| x                             | `number`                          | -                                                  | position of `x` axis relative to `bounds` to change `transform`                                                                                  |
+| y                             | `number`                          | -                                                  | position of `y` axis relative to `bounds` to change `transform`                                                                                  |
 | axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -              | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `boundsParent` element                                                                                          |

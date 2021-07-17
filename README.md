@@ -20,7 +20,7 @@ Using the free drag and drop component of Transform, the drag process does not a
 1. The child element cannot be an inline element because transform does not work on inline elements!
 2. `props. Children` limited to a single closed tag!
 3. The `DraggableEvent` component is an event handling component that provides developers with the ability to handle event;
-4. The events of the component relative to positions is the `bounds` parent;
+4. The events of the component relative to positions is the `bounds` element;
 
 ### install
 ```

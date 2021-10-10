@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { createCSSTransform, createSVGTransform, getPositionByBounds, findElement, getPositionInParent } from './utils/dom';
+import { createCSSTransform, createSVGTransform, getPositionByBounds, findElement, getInsidePosition } from './utils/dom';
 import { DraggableProps, DragData, EventHandler, PositionType, DragAxis, BoundsInterface } from "./utils/types";
 import { isElementSVG } from "./utils/verify";
 import DraggableEvent from './DraggableEvent';
@@ -55,7 +55,11 @@ import DraggableEvent from './DraggableEvent';
     useEffect(() => {
         const node = nodeRef.current;
         const parent = getLocationParent();
-        const initXY = getPositionInParent(node, parent);
+        const pos = getInsidePosition(node, parent);
+        const initXY = pos && {
+            x: pos?.left,
+            y: pos?.top
+        };
         initXY && setInitXY(initXY);
         if (initXY) {
             eventDataUpdate(eventDataRef.current, { lastX: initXY?.x, lastY: initXY?.y });
@@ -106,9 +110,9 @@ import DraggableEvent from './DraggableEvent';
         if (!data) return;
         const node = data?.node;
         const parent = getLocationParent();
-        const positionXY = getPositionInParent(node, parent);
-        let positionX = positionXY?.x;
-        let positionY = positionXY?.y;
+        const pos = getInsidePosition(node, parent);
+        let positionX = pos?.left;
+        let positionY = pos?.top;
 
         const translateX = eventDataRef.current?.translateX || 0;
         const translateY = eventDataRef.current?.translateY || 0;

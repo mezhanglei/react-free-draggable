@@ -1,5 +1,4 @@
 import { isDom, isEmpty, isNumber } from "./type";
-import { PositionType } from "./types";
 
 // 添加选中类和样式
 export const addUserSelectStyles = (doc: any): any => {
@@ -179,18 +178,147 @@ export function isContains(root: HTMLElement, child: HTMLElement): boolean {
 };
 
 /**
+ * 返回元素的视窗内的位置
+ * @param el 
+ * @returns 
+ */
+ export function getRect(el: HTMLElement) {
+    return el.getBoundingClientRect()
+}
+
+// 获取页面或元素的宽高 = 可视宽高 + 滚动条 + 边框
+export function getOffsetWH(el: HTMLElement): undefined | {
+    width: number;
+    height: number;
+} {
+    if (!isDom(el)) {
+        return;
+    }
+    if ([document.documentElement, document.body].includes(el)) {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        return { width, height };
+    } else {
+        const width = el.offsetWidth;
+        const height = el.offsetHeight;
+        return { width, height };
+    }
+};
+
+// 返回元素或事件对象的视口位置
+export function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | {
+    x: number;
+    y: number;
+} {
+    let pos = null;
+    if ("clientX" in el) {
+        pos = {
+            x: el.clientX,
+            y: el.clientY
+        };
+    } else if ("touches" in el) {
+        if (el?.touches[0]) {
+            pos = {
+                x: el.touches[0]?.clientX,
+                y: el.touches[0]?.clientY
+            };
+        }
+    } else if (isDom(el)) {
+        if ([document.documentElement, document.body].includes(el)) {
+            pos = {
+                x: 0,
+                y: 0
+            }
+        } else {
+            pos = {
+                x: getRect(el)?.left,
+                y: getRect(el).top
+            };
+        }
+    }
+    return pos;
+}
+
+// 目标在父元素内的四条边位置信息
+export function getInsidePosition(el: HTMLElement, parent: HTMLElement = document.body || document.documentElement): null | {
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
+} {
+    let pos = null;
+    if (isDom(el)) {
+        const nodeW = getOffsetWH(el)?.width || 0;
+        const nodeH = getOffsetWH(el)?.height || 0;
+
+        const top = getRect(el).top - getRect(parent).top;
+        const left = getRect(el).left - getRect(parent).left;
+
+        return {
+            left,
+            top,
+            right: left + nodeW,
+            bottom: top + nodeH
+        }
+    }
+    return pos;
+}
+
+/**
+ * 返回事件对象相对于父元素的真实位置
+ * @param el 事件对象
+ * @param parent 父元素
+ */
+ export function getEventPosition(el: MouseEvent | TouchEvent, parent: HTMLElement = document.body || document.documentElement): null | {
+    x: number;
+    y: number;
+} {
+    let pos = null;
+    if ("clientX" in el) {
+        pos = {
+            x: el?.clientX - getRect(parent).left,
+            y: el?.clientY - getRect(parent).top,
+        };
+    } else if ("touches" in el) {
+        if (el?.touches[0]) {
+            pos = {
+                x: el?.touches[0]?.clientX - getRect(parent).left,
+                y: el?.touches[0]?.clientY - getRect(parent).top
+            };
+        }
+    }
+
+    return pos;
+}
+
+/**
+ * 查询元素是否在某个元素内
+ * @param el 元素
+ * @param parent 父元素
+ */
+ export function matchParent(el: any, parent: HTMLElement): boolean {
+    let node = el;
+    do {
+        if (node === parent) return true;
+        if ([document.documentElement, document.body].includes(node)) return false;
+        node = node.parentNode;
+    } while (node);
+
+    return false;
+}
+
+/**
  * 添加事件监听
  * @param el 目标元素
  * @param event 事件名称
  * @param handler 事件函数
  * @param inputOptions 配置
  */
-interface InputOptionsType {
+ export function addEvent(el: any, event: string, handler: (...rest: any[]) => any, inputOptions?: {
     captrue?: boolean,
     once?: boolean,
     passive?: boolean
-}
-export function addEvent(el: any, event: string, handler: (...rest: any[]) => any, inputOptions?: InputOptionsType): void {
+}): void {
     if (!el) return;
     // captrue: true事件捕获 once: true只调用一次,然后销毁 passive: true不调用preventDefault
     const options = { capture: false, once: false, passive: false, ...inputOptions };
@@ -211,7 +339,11 @@ export function addEvent(el: any, event: string, handler: (...rest: any[]) => an
  * @param handler 事件函数
  * @param inputOptions 配置
  */
-export function removeEvent(el: any, event: string, handler: (...rest: any[]) => any, inputOptions?: InputOptionsType): void {
+export function removeEvent(el: any, event: string, handler: (...rest: any[]) => any, inputOptions?: {
+    captrue?: boolean,
+    once?: boolean,
+    passive?: boolean
+}): void {
     if (!el) return;
     const options = { capture: false, once: false, passive: false, ...inputOptions };
     if (el.removeEventListener) {
@@ -222,74 +354,5 @@ export function removeEvent(el: any, event: string, handler: (...rest: any[]) =>
         // $FlowIgnore: Doesn't think elements are indexable
         el['on' + event] = null;
     }
-}
-
-// 返回元素或事件对象的可视位置
-export function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | PositionType {
-    let pos = null;
-    if ("clientX" in el) {
-        pos = {
-            x: el.clientX,
-            y: el.clientY
-        };
-    } else if ("touches" in el) {
-        if (el?.touches[0]) {
-            pos = {
-                x: el.touches[0]?.clientX,
-                y: el.touches[0]?.clientY
-            };
-        }
-    } else if (isDom(el)) {
-        pos = {
-            x: el.getBoundingClientRect().left,
-            y: el.getBoundingClientRect().top
-        };
-    }
-    return pos;
-}
-
-/**
- * 返回元素或事件对象相对于父元素的真实位置
- * @param el 元素或事件对象
- * @param parent 父元素
- */
- export function getPositionInParent(el: MouseEvent | TouchEvent | HTMLElement, parent: HTMLElement): null | PositionInterface {
-    let pos = null;
-    if ("clientX" in el) {
-        pos = {
-            x: el?.clientX - parent.getBoundingClientRect().left,
-            y: el?.clientY - parent.getBoundingClientRect().top
-        };
-    } else if ("touches" in el) {
-        if (el?.touches[0]) {
-            pos = {
-                x: el?.touches[0]?.clientX - parent.getBoundingClientRect().left,
-                y: el?.touches[0]?.clientY - parent.getBoundingClientRect().top
-            };
-        }
-    } else if (isDom(el)) {
-        pos = {
-            x: el.getBoundingClientRect().left - parent.getBoundingClientRect().left,
-            y: el.getBoundingClientRect().top - parent.getBoundingClientRect().top
-        };
-    }
-
-    return pos;
-}
-
-/**
- * 查询元素是否在某个元素内
- * @param el 元素
- * @param parent 父元素
- */
-export function matchParent(el: any, parent: HTMLElement): boolean {
-    let node = el;
-    do {
-        if (node === parent) return true;
-        if ((node === document.body) || (node === document.documentElement)) return false;
-        node = node.parentNode;
-    } while (node);
-
-    return false;
 }
 

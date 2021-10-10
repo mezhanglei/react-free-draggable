@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
-import { matchParent, addEvent, removeEvent, getPositionInParent, findElement, addUserSelectStyles, removeUserSelectStyles, snapToGrid } from "./utils/dom";
+import { matchParent, addEvent, removeEvent, getEventPosition, findElement, addUserSelectStyles, removeUserSelectStyles, snapToGrid } from "./utils/dom";
 import { isMobile, isEventTouch } from "./utils/verify";
 import { DraggableEventProps, EventData, EventType } from "./utils/types";
 
@@ -99,7 +99,7 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
 
         // locationParent内的位置
         const parent = getLocationParent();
-        const positionXY = getPositionInParent(e, parent);
+        const positionXY = getEventPosition(e, parent);
         if (!positionXY) return;
         const positionX = positionXY?.x;
         const positionY = positionXY?.y;
@@ -139,7 +139,7 @@ const DraggableEvent = React.forwardRef<any, DraggableEventProps>((props, ref) =
         e.preventDefault();
         // locationParent内的位置
         const parent = getLocationParent();
-        const positionXY = getPositionInParent(e, parent);
+        const positionXY = getEventPosition(e, parent);
         if (!positionXY) return;
         let positionX = positionXY?.x;
         let positionY = positionXY?.y;

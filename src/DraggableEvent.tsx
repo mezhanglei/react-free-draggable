@@ -58,7 +58,7 @@ class DraggableEvent extends React.Component<DraggableEventProps, {}> {
     };
 
     findDOMNode() {
-        return this.props?.forwardedRef.current || ReactDOM.findDOMNode(this);
+        return this.props?.forwardedRef?.current || ReactDOM.findDOMNode(this);
     }
 
     // 拖拽句柄

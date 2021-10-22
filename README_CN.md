@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.0.7-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.8-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -37,8 +37,6 @@ import Draggable from 'react-free-draggable';
     <Draggable
         axis="both"
         bounds=".boxs"
-        // dragNode=".handle"
-        // grid={[100, 25]}
         scale={1}
         >
             <div style={{ display: "inline-block" }}>
@@ -54,7 +52,7 @@ import Draggable from 'react-free-draggable';
 
 | 名称                          | 类型                  | 默认值                                                         | 描述                                                                                                      |
 | ----------------------------- | --------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| dragNode                      | `string / HTMLElement`            | -                                                  | 拖拽元素的类选择器或元素                                                                                  |
+| handle                      | `string / HTMLElement`            | -                                                  | 拖拽元素的类选择器或元素                                                                                  |
 | disabledNode                  | `string / HTMLElement`            | -                                                  | 不允许拖拽的选择器或元素                                                                              |
 | enableUserSelectHack          | `boolean`                         | -                                                  | 允许添加选中样式                                                  |
 | grid                          | `[number, number]`                | -                                                  | 设置x,y方向幅度，多少幅度移动一次目标                                                                              |

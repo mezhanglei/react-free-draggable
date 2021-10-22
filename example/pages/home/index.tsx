@@ -11,8 +11,6 @@ const Home: React.FC<any> = (props) => {
                 <Draggable
                     axis="both"
                     bounds=".boxs"
-                    // dragNode=".handle"
-                    // grid={[100, 25]}
                     scale={1}
                 >
                     <div style={{ display: "inline-block" }}>

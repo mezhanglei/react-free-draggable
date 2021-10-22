@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.0.7-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.0.8-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -37,8 +37,6 @@ import Draggable from 'react-free-draggable';
     <Draggable
         axis="both"
         bounds=".boxs"
-        // dragNode=".handle"
-        // grid={[100, 25]}
         scale={1}
         >
             <div style={{ display: "inline-block" }}>
@@ -54,7 +52,7 @@ import Draggable from 'react-free-draggable';
 
 | name                          | type                  | defaultValue                                                   | description                                                                                                      |
 | ----------------------------- | --------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| dragNode                      | `string / HTMLElement`            | -                                                  | Drag the class selector or element for the element                                                                                  |
+| handle                      | `string / HTMLElement`            | -                                                  | Drag the class selector or element for the element                                                                                  |
 | disabledNode                  | `string / HTMLElement`            | -                                                  | A selector or element that does not allow drag and drop                                                                              |
 | enableUserSelectHack          | `boolean`                         | -                                                  | Allows you to add selected styles                                                  |
 | grid                          | `[number, number]`                | -                                                  | Set X, Y direction amplitude, how much to move the target                                                                              |

@@ -9,7 +9,6 @@ const Home: React.FC<any> = (props) => {
         <>
             <div className="boxs" style={{ display: 'inline-block', width: '500px', background: "red" }}>
                 <Draggable
-                    axis="both"
                     bounds=".boxs"
                     scale={1}
                 >

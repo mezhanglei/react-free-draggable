@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.0.9-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.1.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -35,7 +35,6 @@ import Draggable from 'react-free-draggable';
 
 <div className="boxs" style={{ display: 'inline-block', width: '500px', background: "red" }}>
     <Draggable
-        axis="both"
         bounds=".boxs"
         scale={1}
         >
@@ -64,7 +63,7 @@ import Draggable from 'react-free-draggable';
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
 | x                             | `number`                          | -                                                  | 受控x轴位置，相对于`bounds`的父元素为参考点改变`transform`属性                                                                                  |
 | y                             | `number`                          | -                                                  | 受控y轴位置，相对于`bounds`父元素为参考点改变`transform`属性                                                                                  |
-| axis                          | `both / x / y / none`             | -                                                  | 限制拖拽运动方向                                                                                  |
+| axis                          | `['x','y']`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |

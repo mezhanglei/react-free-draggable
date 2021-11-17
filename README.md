@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.0.9-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.1.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -35,7 +35,6 @@ import Draggable from 'react-free-draggable';
 
 <div className="boxs" style={{ display: 'inline-block', width: '500px', background: "red" }}>
     <Draggable
-        axis="both"
         bounds=".boxs"
         scale={1}
         >
@@ -64,7 +63,7 @@ import Draggable from 'react-free-draggable';
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
 | x                             | `number`                          | -                                                  | position of `x` axis relative to `bounds` to change `transform`                                                                                  |
 | y                             | `number`                          | -                                                  | position of `y` axis relative to `bounds` to change `transform`                                                                                  |
-| axis                          | `both / x / y / none`             | -                                                  | the direction of drag and drop                                                                                  |
+| axis                          | `['x','y']`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -              | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `boundsParent` element                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | The `zIndex` range that can be set when dragging and dropping                                                                                          |

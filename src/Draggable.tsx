@@ -4,7 +4,6 @@ import { createCSSTransform, createSVGTransform, getPositionByBounds, findElemen
 import { DraggableProps, DragData, EventHandler, PositionType, DragAxis, BoundsInterface, DragAxisCode } from "./utils/types";
 import { isElementSVG } from "./utils/verify";
 import DraggableEvent from './DraggableEvent';
-import ReactDOM from 'react-dom';
 
 /**
  * 拖拽组件-回调处理(通过transform来控制元素拖拽, 不影响页面布局)
@@ -51,7 +50,7 @@ import ReactDOM from 'react-dom';
     useImperativeHandle(ref, () => (findDOMNode()));
 
     const findDOMNode = () => {
-        return nodeRef?.current || ReactDOM.findDOMNode(this);
+        return nodeRef?.current;
     }
 
     // 获取定位父元素，涉及的位置相对于该父元素

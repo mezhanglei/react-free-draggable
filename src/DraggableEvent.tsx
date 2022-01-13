@@ -96,7 +96,7 @@ class DraggableEvent extends React.Component<DraggableEventProps, {}> {
         }
 
         // pc端鼠标操作时允许非左键操作
-        if (!this.props?.allowAnyClick && !isEventTouch(e) && typeof e.button === 'number' && e.button !== 0) return;
+        if (!this.props?.allowAnyClick && !isEventTouch(e) && typeof (e as any).button === 'number' && (e as any).button !== 0) return;
         // 移动设备阻止默认行为
         if (e.type === 'touchstart') e.preventDefault();
 
@@ -232,7 +232,7 @@ class DraggableEvent extends React.Component<DraggableEventProps, {}> {
     }
 }
 
-const wrapper = function (InnerComponent: any) {
+const wrapper = function (InnerComponent: any): any {
     return React.forwardRef((props, ref) => {
         return (
             <InnerComponent forwardedRef={ref} {...props} />

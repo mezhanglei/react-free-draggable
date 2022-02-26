@@ -19,8 +19,12 @@ export function isString(data: any) {
     return getType(data) == '[object String]';
 }
 
+export function isObject(data: any) {
+    return getType(data) == '[object Object]';
+}
+
 // 判断值是否为空
-export function isEmpty(value: any) {
+export function isEmpty(value: unknown) {
     if (Array.isArray(value)
         || typeof value === 'string'
         || value instanceof String
@@ -33,11 +37,8 @@ export function isEmpty(value: any) {
     }
 
     if (({}).toString.call(value) === '[object Object]') {
-        return Object.keys(value).length === 0;
+        return Object.keys(<object>value).length === 0;
     }
 
-    if (value === undefined || value === null) {
-        return true;
-    }
-    return false;
+    return value === undefined || value === null;
 }

@@ -23,7 +23,7 @@ const eventsFor = {
 // 根据当前设备看是否触发
 let dragEventFor = isMobile() ? eventsFor.touch : eventsFor.mouse;
 
-class DraggableEvent extends React.Component<DraggableEventProps, {}> {
+class DraggableEvent extends React.Component<DraggableEventProps> {
     dragging: boolean;
     eventData?: EventData;
     child?: any;

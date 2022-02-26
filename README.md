@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.1.1-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.1.3-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -10,10 +10,10 @@ Using the free drag and drop component of Transform, the drag process does not a
 
 # featrues
 
-- [x] Using `tranform` to realize element drag and drop movement, high performance, smooth
-- [x] You can set the drag bounds `bounds` to limit the scope of the drag by setting the parent element, Full-screen drag is the default
-- [x] Other properties of the wrapped `props. children` (properties that are not drag related) are not affected by `react-free-draggable`. It's still the same as not being wrapped
-- [x] Provides fully sufficient free configuration API to implement various Settings during the drag and drop process
+- Using `tranform` to realize element drag and drop movement, high performance, smooth
+- You can set the drag bounds `bounds` to limit the scope of the drag by setting the parent element, Full-screen drag is the default
+- Other properties of the wrapped `props. children` (properties that are not drag related) are not affected by `react-free-draggable`. It's still the same as not being wrapped
+- `x, y` support controlled positions with reference to the `bounds` element in the coordinate system
 
 # Matters
 
@@ -67,7 +67,7 @@ import Draggable from 'react-free-draggable';
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -              | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `boundsParent` element                                                                                          |
 | zIndexRange                   | `[number, number]`                | `[]`                                               | The `zIndex` range that can be set when dragging and dropping                                                                                          |
-| reset                   | `boolean`                | -                                               | reset to `transform: translate3d(0,0,0);`                                 |
+| fixed                   | `boolean`                | -                                               | Fixed dragging position                                 |
 
 
 

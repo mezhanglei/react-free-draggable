@@ -11,15 +11,10 @@ export interface EventData {
 }
 export interface DragData {
     node?: any;
-    deltaX: number;
-    deltaY: number;
     x?: number;
     y?: number;
     translateX: number;
     translateY: number;
-    zIndex?: number;
-    lastX?: number;
-    lastY?: number;
 }
 export interface PositionType {
     x: number;
@@ -59,20 +54,34 @@ export interface DraggableProps {
     disabledNode?: string | HTMLElement;
     enableUserSelectHack?: boolean;
     grid?: [number, number];
-    scale?: number;
+    scale: number;
     x?: number;
     y?: number;
     axis?: string[];
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
-    zIndexRange?: [number, number];
-    reset?: boolean;
+    zIndexRange: [number, number];
     className?: string;
     style?: CSSProperties;
     transform?: string;
     onDragStart?: DragHandler;
     onDrag?: DragHandler;
     onDragStop?: DragHandler;
+    forwardedRef?: any;
+    fixed?: boolean;
+}
+export declare enum DragTypes {
+    dragStart = "dragStart",
+    draging = "draging",
+    dragEnd = "dragEnd"
+}
+export interface DraggableState {
+    dragData: DragData;
+    dragType?: DragTypes;
+    isSVG: boolean;
+    zIndex?: number;
+    prevX?: number;
+    prevY?: number;
 }
 export declare type EventHandler<E = EventType, T = EventData> = (e: E, data?: T) => void | boolean;
 export declare type DragHandler<E = EventType, T = DragData> = (e: E, data?: T) => void | boolean;

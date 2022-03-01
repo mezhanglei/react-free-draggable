@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.1.3-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.1.4-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -13,7 +13,7 @@
 - 利用tranform实现element元素或svg元素拖拽移动,性能高,流畅
 - 可设置拖拽边界`bounds`来限制拖拽的范围,默认全屏拖拽
 - 被包裹的`props.children`的其他属性(非拖拽相关的属性)不会受到`react-free-draggable`影响.仍和没有被包裹一样.
-- `x, y`支持受控位置，参考坐标系为`bounds`元素
+- 当元素为`position: absolute`时, `x, y`支持受控，参考坐标系为`bounds`元素
 
 # 注意事项
 
@@ -61,12 +61,11 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | 拖拽进行事件                      |
 | onDragStop                    | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
-| x                             | `number`                          | -                                                  | 受控x轴位置，相对于`bounds`的父元素为参考点改变`transform`属性                                                                                  |
-| y                             | `number`                          | -                                                  | 受控y轴位置，相对于`bounds`父元素为参考点改变`transform`属性                                                                                  |
+| x                             | `number`                          | -                                                  | 元素为`position: absolute`时, 受控x轴位置，相对于`bounds`的父元素为参考点改变`transform`属性                                                                                  |
+| y                             | `number`                          | -                                                  | 元素为`position: absolute`时, 受控y轴位置，相对于`bounds`父元素为参考点改变`transform`属性                                                                                  |
 | axis                          | `['x','y']`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
-| zIndexRange                   | `[number, number]`                | `[]`                                               | 拖拽时可设置的层级范围                                                                                          |
-| fixed                   | `boolean`                | -                                               | 固定拖拽位置                                 |
+| fixed                   | `boolean`                | -                                               | 当为非受控组件时，固定拖拽位置                                 |
 
 

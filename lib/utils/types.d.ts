@@ -60,7 +60,6 @@ export interface DraggableProps {
     axis?: string[];
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
-    zIndexRange: [number, number];
     className?: string;
     style?: CSSProperties;
     transform?: string;
@@ -79,7 +78,6 @@ export interface DraggableState {
     dragData: DragData;
     dragType?: DragTypes;
     isSVG: boolean;
-    zIndex?: number;
     prevX?: number;
     prevY?: number;
 }

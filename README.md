@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-6.1.3-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-6.1.4-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -13,7 +13,7 @@ Using the free drag and drop component of Transform, the drag process does not a
 - Using `tranform` to realize element drag and drop movement, high performance, smooth
 - You can set the drag bounds `bounds` to limit the scope of the drag by setting the parent element, Full-screen drag is the default
 - Other properties of the wrapped `props. children` (properties that are not drag related) are not affected by `react-free-draggable`. It's still the same as not being wrapped
-- `x, y` support controlled positions with reference to the `bounds` element in the coordinate system
+- When the element is `position: absolute`, the `x, y` support is controlled and the reference coordinate system is the `bounds` element
 
 # Matters
 
@@ -61,13 +61,12 @@ import Draggable from 'react-free-draggable';
 | onDrag                        | `function`                        | -                                                  | the dragging event                      |
 | onDragStop                    | `function`                        | -                                                  | the end event                                                                                  |
 | scale                         | `number`                          | 1                                                  | Drag sensitivity                                                                                  |
-| x                             | `number`                          | -                                                  | position of `x` axis relative to `bounds` to change `transform`                                                                                  |
-| y                             | `number`                          | -                                                  | position of `y` axis relative to `bounds` to change `transform`                                                                                  |
+| x                             | `number`                          | -                                                  | When the element is `position: absolute`, position of `x` axis relative to `bounds` to change `transform`                                                                                  |
+| y                             | `number`                          | -                                                  | When the element is `position: absolute`, position of `y` axis relative to `bounds` to change `transform`                                                                                  |
 | axis                          | `['x','y']`             | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -              | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `boundsParent` element                                                                                          |
-| zIndexRange                   | `[number, number]`                | `[]`                                               | The `zIndex` range that can be set when dragging and dropping                                                                                          |
-| fixed                   | `boolean`                | -                                               | Fixed dragging position                                 |
+| fixed                   | `boolean`                | -                                               | Fixed dragging position when it is a non-controlled component                                |
 
 
 

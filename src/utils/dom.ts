@@ -250,17 +250,18 @@ export function getInsidePosition(el: HTMLElement, parent: HTMLElement = documen
     if (isDom(el)) {
         const nodeOffset = getOffsetWH(el);
         if (!nodeOffset) return null;
-        const parentBorderWidth = parseFloat(getComputedStyle(parent)?.borderLeftWidth);
+        const borderLeftWidth = parseFloat(getComputedStyle(parent)?.borderLeftWidth) || 0;
+        const borderTopWidth = parseFloat(getComputedStyle(parent)?.borderTopWidth) || 0;
 
-        const top = getRect(el).top - getRect(parent).top - parentBorderWidth;
-        const left = getRect(el).left - getRect(parent).left - parentBorderWidth;
+        const top = getRect(el).top - getRect(parent).top - borderTopWidth;
+        const left = getRect(el).left - getRect(parent).left - borderLeftWidth;
 
         return {
             left,
             top,
             right: left + nodeOffset?.width,
             bottom: top + nodeOffset?.height
-        }
+        };
     }
     return pos;
 }

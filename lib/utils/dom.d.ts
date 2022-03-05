@@ -38,10 +38,6 @@ export declare function getOffsetWH(el: HTMLElement): undefined | {
     width: number;
     height: number;
 };
-export declare function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | {
-    x: number;
-    y: number;
-};
 export declare function getInsidePosition(el: HTMLElement, parent?: HTMLElement): null | {
     left: number;
     top: number;

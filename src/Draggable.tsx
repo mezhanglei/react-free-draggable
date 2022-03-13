@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { createCSSTransform, createSVGTransform, getPositionByBounds, findElement, getInsidePosition } from './utils/dom';
-import { DraggableProps, EventHandler, DragAxisCode, DragAxis, DragTypes, DragData, BoundsInterface, DraggableState } from "./utils/types";
+import { getPositionByBounds, getTranslation, findElement, getInsidePosition } from './utils/dom';
+import { DraggableProps, EventHandler, DragAxisCode, DragAxis, DragTypes, DragData, BoundsInterface, DraggableState, DragEventData } from "./utils/types";
 import { isElementSVG } from "./utils/verify";
 import DraggableEvent from './DraggableEvent';
 import { mergeObject } from './utils/object';
@@ -21,21 +21,15 @@ import ReactDOM from 'react-dom';
    slackX: number;
    slackY: number;
    dragType?: DragTypes;
-   lastDragData: DragData;
+   lastDragData: DragData | {};
    constructor(props: DraggableProps) {
      super(props);
      this.slackX = 0;
      this.slackY = 0;
+     this.lastDragData = {};
      // dragStart时的数据
-     this.lastDragData = {
-       translateX: 0,
-       translateY: 0
-     }
      this.state = {
-       dragData: {
-         translateX: 0,
-         translateY: 0
-       },
+       dragData: {},
        isSVG: false
      };
    }
@@ -58,7 +52,7 @@ import ReactDOM from 'react-dom';
    }
  
    // 非拖拽元素设置translate，根据输入的x，y位置转换为translate距离
-   setDragdata = (oldDragData: DragData, newX?: number, newY?: number) => {
+   setDragdata = (oldDragData: DragData | {}, newX?: number, newY?: number) => {
      const child = this.findDOMNode();
      const initX = this.initX as number;
      const initY = this.initY as number;
@@ -122,24 +116,26 @@ import ReactDOM from 'react-dom';
  
    onDragStart: EventHandler = (e, data) => {
      e.stopImmediatePropagation();
-     if (!data) return;
      this.dragType = DragTypes.dragStart;
      const node = data?.node;
      const parent = this.getLocationParent();
      const pos = getInsidePosition(node, parent);
+     if (!data || !pos) return;
      let positionX = pos?.left;
      let positionY = pos?.top;
      const { dragData } = this.state;
      const { onDragStart } = this.props;
  
-     const translateX = dragData?.translateX || 0;
-     const translateY = dragData?.translateY || 0;
+     const translateX = dragData?.translateX;
+     const translateY = dragData?.translateY;
  
      const newDragData = {
        ...dragData,
        translateX,
        translateY,
        x: positionX, y: positionY,
+       deltaX: data?.deltaX,
+       deltaY: data?.deltaY,
        node
      }
  
@@ -166,6 +162,8 @@ import ReactDOM from 'react-dom';
        node: data.node,
        translateX: this.canDragX() ? (translateX + (data?.deltaX / scale)) : translateX,
        translateY: this.canDragY() ? (translateY + (data.deltaY / scale)) : translateY,
+       deltaX: data?.deltaX,
+       deltaY: data?.deltaY,
        x: this.canDragX() ? (x + (data?.deltaX / scale)) : x,
        y: this.canDragY() ? (y + (data.deltaY / scale)) : y
      };
@@ -226,7 +224,7 @@ import ReactDOM from 'react-dom';
      } else if (this.props.fixed) {
        this.setDragdata(this.lastDragData, undefined, undefined)
      }
-     onDragStop && onDragStop(e, beforeEndDragData);
+     onDragStop && onDragStop(e, beforeEndDragData as DragEventData);
      this.slackX = 0;
      this.slackY = 0;
    };
@@ -252,8 +250,8 @@ import ReactDOM from 'react-dom';
  
      // 当前位置
      const currentPosition = {
-       x: dragData?.translateX || 0,
-       y: dragData?.translateY || 0
+       x: dragData?.translateX,
+       y: dragData?.translateY
      };
  
      // React.Children.only限制只能传递一个child
@@ -262,9 +260,9 @@ import ReactDOM from 'react-dom';
          {React.cloneElement(React.Children.only(children), {
            className: cls,
            style: mergeObject({ ...children.props.style, ...style }, {
-             transform: !isSVG ? createCSSTransform(currentPosition, positionOffset) : style?.transform ?? (children.props.style?.transform || "")
+             transform: !isSVG && getTranslation(currentPosition, positionOffset, 'px')
            }),
-           transform: isSVG ? createSVGTransform(currentPosition, positionOffset) : (transform ?? (children.props?.transform || "")),
+           transform: isSVG ? getTranslation(currentPosition, positionOffset, '') : (transform ?? (children.props?.transform || "")),
          })}
        </DraggableEvent>
      );

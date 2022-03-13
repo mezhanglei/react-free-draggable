@@ -25,8 +25,8 @@ let dragEventFor = isMobile() ? eventsFor.touch : eventsFor.mouse;
 
 class DraggableEvent extends React.Component<DraggableEventProps> {
   dragging: boolean;
-  eventData?: EventData;
-  child?: any;
+  eventData: EventData | undefined;
+  child: any;
   constructor(props: DraggableEventProps) {
     super(props);
     this.dragging = false;
@@ -132,14 +132,7 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
 
     // 滚动过程中选中文本被添加样式
     if (this.props?.enableUserSelectHack) addUserSelectStyles(ownerDocument);
-
     this.dragging = true;
-    this.eventData = {
-      ...this.eventData,
-      lastEventX: positionX,
-      lastEventY: positionY
-    }
-
     addEvent(ownerDocument, dragEventFor.move, this.handleDrag);
     addEvent(ownerDocument, dragEventFor.stop, this.handleDragStop);
     addEvent(ownerDocument, dragEventFor.cancel, this.handleDragStop);
@@ -152,16 +145,13 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     const parent = this.getLocationParent();
     const child = this.findDOMNode();
     const positionXY = getEventPosition(e, parent);
-    if (!positionXY) return;
+    if (!positionXY || !this.eventData) return;
     let positionX = positionXY?.x;
     let positionY = positionXY?.y;
-
-    if (!this.eventData) return;
-
+    const { lastEventX, lastEventY } = this.eventData;
     // 拖拽跳跃,可设置多少幅度跳跃一次
     const grid = this.props?.grid;
     if (Array.isArray(grid)) {
-      const { lastEventX, lastEventY } = this.eventData;
       let deltaX = positionX - lastEventX, deltaY = positionY - lastEventY;
       [deltaX, deltaY] = snapToGrid(grid, deltaX, deltaY);
       if (!deltaX && !deltaY) return; // skip useless drag
@@ -171,8 +161,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     // 返回事件对象相关的位置信息
     this.eventData = {
       node: child,
-      deltaX: positionX - this.eventData?.lastEventX,
-      deltaY: positionY - this.eventData?.lastEventY,
+      deltaX: positionX - lastEventX,
+      deltaY: positionY - lastEventY,
       lastEventX: positionX,
       lastEventY: positionY,
       eventX: positionX,

@@ -1,27 +1,8 @@
-export declare const addUserSelectStyles: (doc: any) => any;
-export declare function removeUserSelectStyles(doc: any): void;
-export declare function addClassName(el: HTMLElement, className: string): void;
-export declare function removeClassName(el: HTMLElement, className: string): void;
-export declare function snapToGrid(grid: [number, number], pendingX: number, pendingY: number): [number, number];
-export interface PositionInterface {
-    x: number;
-    y: number;
-}
-export declare function getTranslation(current: PositionInterface, positionOffset: PositionInterface | undefined, unit: string): string;
-export declare function createCSSTransform(current: PositionInterface, positionOffset?: PositionInterface | undefined): string;
-export declare function createSVGTransform(current: PositionInterface, positionOffset?: PositionInterface | undefined): string;
-export declare function getBoundsInParent(node: HTMLElement, bounds: any): {
-    left: number;
-    right: number;
-    top: number;
-    bottom: number;
-} | undefined;
-export declare function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface;
 /**
  * 接收类名或节点，返回节点
  * @param target 目标参数
  */
-export declare const findElement: (target: any) => any;
+export declare const findElement: (target: any) => null | HTMLElement;
 /**
  * 判断根元素是不是包含目标元素
  * @param {*} root 根元素
@@ -29,11 +10,14 @@ export declare const findElement: (target: any) => any;
  */
 export declare function isContains(root: HTMLElement, child: HTMLElement): boolean;
 /**
- * 返回元素的视窗内的位置
- * @param el
- * @returns
+ * 返回事件对象相对于父元素的真实位置
+ * @param el 事件对象
+ * @param parent 父元素
  */
-export declare function getRect(el: HTMLElement): DOMRect;
+export declare function getEventPosition(el: MouseEvent | TouchEvent, parent?: HTMLElement): null | {
+    x: number;
+    y: number;
+};
 export declare function getOffsetWH(el: HTMLElement): undefined | {
     width: number;
     height: number;
@@ -44,15 +28,35 @@ export declare function getInsidePosition(el: HTMLElement, parent?: HTMLElement)
     right: number;
     bottom: number;
 };
-/**
- * 返回事件对象相对于父元素的真实位置
- * @param el 事件对象
- * @param parent 父元素
- */
-export declare function getEventPosition(el: MouseEvent | TouchEvent, parent?: HTMLElement): null | {
+export declare const addUserSelectStyles: (doc: any) => any;
+export declare function removeUserSelectStyles(doc: any): void;
+export declare function addClassName(el: HTMLElement, className: string): void;
+export declare function removeClassName(el: HTMLElement, className: string): void;
+export declare function snapToGrid(grid: [number, number], pendingX: number, pendingY: number): [number, number];
+export interface PositionInterface {
     x: number;
     y: number;
-};
+}
+export declare function getTranslation(current: {
+    x?: number;
+    y?: number;
+}, positionOffset: {
+    x: number;
+    y: number;
+} | undefined, unit: string): string | undefined;
+export declare function getBoundsInParent(node: HTMLElement, bounds: any): {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+} | undefined;
+export declare function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface;
+/**
+ * 返回元素的视窗内的位置
+ * @param el
+ * @returns
+ */
+export declare function getRect(el: HTMLElement): DOMRect;
 /**
  * 查询元素是否在某个元素内
  * @param el 元素

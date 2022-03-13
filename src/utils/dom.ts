@@ -1,5 +1,102 @@
 import { isDom, isEmpty, isNumber } from "./type";
 
+/**
+ * 接收类名或节点，返回节点
+ * @param target 目标参数
+ */
+ export const findElement = (target: any): null | HTMLElement => {
+  let result = null;
+  if (typeof target === "string") {
+    result = document.querySelector(target);
+  } else if (isDom(target)) {
+    result = target;
+  }
+  return result;
+};
+
+/**
+ * 判断根元素是不是包含目标元素
+ * @param {*} root 根元素
+ * @param {*} child 目标元素
+ */
+ export function isContains(root: HTMLElement, child: HTMLElement): boolean {
+  if (!root || root === child) return false;
+  return root.contains(child);
+};
+
+/**
+ * 返回事件对象相对于父元素的真实位置
+ * @param el 事件对象
+ * @param parent 父元素
+ */
+ export function getEventPosition(el: MouseEvent | TouchEvent, parent: HTMLElement = document.body || document.documentElement): null | {
+  x: number;
+  y: number;
+} {
+  let pos = null;
+  if ("clientX" in el) {
+    pos = {
+      x: el?.clientX - getRect(parent).left,
+      y: el?.clientY - getRect(parent).top,
+    };
+  } else if ("touches" in el) {
+    if (el?.touches[0]) {
+      pos = {
+        x: el?.touches[0]?.clientX - getRect(parent).left,
+        y: el?.touches[0]?.clientY - getRect(parent).top
+      };
+    }
+  }
+
+  return pos;
+}
+
+// 获取页面或元素的宽高 = 可视宽高 + 滚动条 + 边框
+export function getOffsetWH(el: HTMLElement): undefined | {
+  width: number;
+  height: number;
+} {
+  if (!isDom(el)) {
+    return;
+  }
+  if ([document.documentElement, document.body].includes(el)) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    return { width, height };
+  } else {
+    const width = el.offsetWidth;
+    const height = el.offsetHeight;
+    return { width, height };
+  }
+};
+
+// 目标在父元素内的四条边位置信息
+export function getInsidePosition(el: HTMLElement, parent: HTMLElement = document.body || document.documentElement): null | {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+} {
+  let pos = null;
+  if (isDom(el)) {
+    const nodeOffset = getOffsetWH(el);
+    if (!nodeOffset) return null;
+    const borderLeftWidth = parseFloat(getComputedStyle(parent)?.borderLeftWidth) || 0;
+    const borderTopWidth = parseFloat(getComputedStyle(parent)?.borderTopWidth) || 0;
+
+    const top = getRect(el).top - getRect(parent).top - borderTopWidth;
+    const left = getRect(el).left - getRect(parent).left - borderLeftWidth;
+
+    return {
+      left,
+      top,
+      right: left + nodeOffset?.width,
+      bottom: top + nodeOffset?.height
+    }
+  }
+  return pos;
+}
+
 // 添加选中类和样式
 export const addUserSelectStyles = (doc: any): any => {
   if (!doc) return;
@@ -70,8 +167,12 @@ export interface PositionInterface {
   y: number
 }
 // 接收偏移位置，返回新的transform值
-export function getTranslation(current: PositionInterface, positionOffset: PositionInterface | undefined, unit: string): string {
-  let translation = `translate3d(${current.x}${unit},${current.y}${unit}, 0)`;
+export function getTranslation(current: { x?: number, y?: number }, positionOffset: { x: number, y: number } | undefined, unit: string) {
+  const { x, y } = current;
+  let translation;
+  if (typeof x == 'number' || typeof y == 'number') {
+    translation = `translate3d(${x || 0}${unit},${y || 0}${unit}, 0)`;
+  }
 
   if (positionOffset) {
     const offsetX = `${(typeof positionOffset.x === 'string') ? positionOffset.x : positionOffset.x + unit}`;
@@ -81,22 +182,10 @@ export function getTranslation(current: PositionInterface, positionOffset: Posit
   return translation;
 }
 
-// 设置css的transform
-export function createCSSTransform(current: PositionInterface, positionOffset?: PositionInterface | undefined): string {
-  const translation = getTranslation(current, positionOffset, 'px');
-  return translation;
-}
-
-// 设置svg的transform
-export function createSVGTransform(current: PositionInterface, positionOffset?: PositionInterface | undefined): string {
-  const translation = getTranslation(current, positionOffset, '');
-  return translation;
-}
-
 // 返回目标元素被父元素限制的位置范围
 export function getBoundsInParent(node: HTMLElement, bounds: any) {
   // 限制父元素
-  const boundsParent: HTMLElement = findElement(bounds) || findElement(bounds?.boundsParent);
+  const boundsParent = (findElement(bounds) || findElement(bounds?.boundsParent)) as HTMLElement;
 
   if (!isDom(node) || !isDom(boundsParent)) {
     return;
@@ -153,109 +242,12 @@ export function getPositionByBounds(node: HTMLElement, position: PositionInterfa
 }
 
 /**
- * 接收类名或节点，返回节点
- * @param target 目标参数
- */
-export const findElement = (target: any): any => {
-  let result = null;
-  if (typeof target === "string") {
-    result = document.querySelector(target);
-  } else if (isDom(target)) {
-    result = target;
-  }
-  return result;
-};
-
-/**
- * 判断根元素是不是包含目标元素
- * @param {*} root 根元素
- * @param {*} child 目标元素
- */
-export function isContains(root: HTMLElement, child: HTMLElement): boolean {
-  if (!root || root === child) return false;
-  return root.contains(child);
-};
-
-/**
  * 返回元素的视窗内的位置
  * @param el 
  * @returns 
  */
 export function getRect(el: HTMLElement) {
-  return el.getBoundingClientRect()
-}
-
-// 获取页面或元素的宽高 = 可视宽高 + 滚动条 + 边框
-export function getOffsetWH(el: HTMLElement): undefined | {
-  width: number;
-  height: number;
-} {
-  if (!isDom(el)) {
-    return;
-  }
-  if ([document.documentElement, document.body].includes(el)) {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    return { width, height };
-  } else {
-    const width = el.offsetWidth;
-    const height = el.offsetHeight;
-    return { width, height };
-  }
-};
-
-// 目标在父元素内的四条边位置信息
-export function getInsidePosition(el: HTMLElement, parent: HTMLElement = document.body || document.documentElement): null | {
-  left: number;
-  top: number;
-  right: number;
-  bottom: number;
-} {
-  let pos = null;
-  if (isDom(el)) {
-    const nodeOffset = getOffsetWH(el);
-    if (!nodeOffset) return null;
-    const borderLeftWidth = parseFloat(getComputedStyle(parent)?.borderLeftWidth) || 0;
-    const borderTopWidth = parseFloat(getComputedStyle(parent)?.borderTopWidth) || 0;
-
-    const top = getRect(el).top - getRect(parent).top - borderTopWidth;
-    const left = getRect(el).left - getRect(parent).left - borderLeftWidth;
-
-    return {
-      left,
-      top,
-      right: left + nodeOffset?.width,
-      bottom: top + nodeOffset?.height
-    };
-  }
-  return pos;
-}
-
-/**
- * 返回事件对象相对于父元素的真实位置
- * @param el 事件对象
- * @param parent 父元素
- */
-export function getEventPosition(el: MouseEvent | TouchEvent, parent: HTMLElement = document.body || document.documentElement): null | {
-  x: number;
-  y: number;
-} {
-  let pos = null;
-  if ("clientX" in el) {
-    pos = {
-      x: el?.clientX - getRect(parent).left,
-      y: el?.clientY - getRect(parent).top,
-    };
-  } else if ("touches" in el) {
-    if (el?.touches[0]) {
-      pos = {
-        x: el?.touches[0]?.clientX - getRect(parent).left,
-        y: el?.touches[0]?.clientY - getRect(parent).top
-      };
-    }
-  }
-
-  return pos;
+  return el.getBoundingClientRect();
 }
 
 /**
@@ -322,4 +314,3 @@ export function removeEvent(el: any, event: string, handler: (...rest: any[]) =>
     el['on' + event] = null;
   }
 }
-

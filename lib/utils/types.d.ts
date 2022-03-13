@@ -13,8 +13,19 @@ export interface DragData {
     node?: any;
     x?: number;
     y?: number;
-    translateX: number;
-    translateY: number;
+    deltaX?: number;
+    deltaY?: number;
+    translateX?: number;
+    translateY?: number;
+}
+export interface DragEventData {
+    node: any;
+    x: number;
+    y: number;
+    deltaX: number;
+    deltaY: number;
+    translateX?: number;
+    translateY?: number;
 }
 export interface PositionType {
     x: number;
@@ -82,4 +93,4 @@ export interface DraggableState {
     prevY?: number;
 }
 export declare type EventHandler<E = EventType, T = EventData> = (e: E, data?: T) => void | boolean;
-export declare type DragHandler<E = EventType, T = DragData> = (e: E, data?: T) => void | boolean;
+export declare type DragHandler<E = EventType, T = DragEventData> = (e: E, data?: T) => void | boolean;

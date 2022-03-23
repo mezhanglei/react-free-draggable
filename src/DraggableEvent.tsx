@@ -1,7 +1,7 @@
 import React from 'react';
 import { matchParent, addEvent, removeEvent, getEventPosition, findElement, addUserSelectStyles, removeUserSelectStyles, snapToGrid } from "./utils/dom";
 import { isMobile, isEventTouch } from "./utils/verify";
-import { DraggableEventProps, EventData, EventType } from "./utils/types";
+import { DragAxis, DragAxisCode, DraggableEventProps, EventData, EventType } from "./utils/types";
 import ReactDOM from 'react-dom';
 
 // Simple abstraction for dragging events names.
@@ -33,6 +33,11 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     this.eventData = undefined;
     this.state = {
     };
+  }
+
+  static defaultProps = {
+    axis: DragAxisCode,
+    scale: 1
   }
 
   componentDidMount() {
@@ -90,7 +95,7 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     const disabledNode = this.findDisabledNode();
     const ownerDocument = this.findOwnerDocument();
     e.preventDefault();
-
+    e.stopImmediatePropagation();
     if (!ownerDocument) {
       throw new Error('<DraggableEvent> not mounted on DragStart!');
     }
@@ -145,12 +150,12 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     const parent = this.getLocationParent();
     const child = this.findDOMNode();
     const positionXY = getEventPosition(e, parent);
+    const { scale, grid } = this.props;
     if (!positionXY || !this.eventData) return;
     let positionX = positionXY?.x;
     let positionY = positionXY?.y;
     const { lastEventX, lastEventY } = this.eventData;
     // 拖拽跳跃,可设置多少幅度跳跃一次
-    const grid = this.props?.grid;
     if (Array.isArray(grid)) {
       let deltaX = positionX - lastEventX, deltaY = positionY - lastEventY;
       [deltaX, deltaY] = snapToGrid(grid, deltaX, deltaY);
@@ -161,8 +166,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     // 返回事件对象相关的位置信息
     this.eventData = {
       node: child,
-      deltaX: positionX - lastEventX,
-      deltaY: positionY - lastEventY,
+      deltaX: this.canDragX() ? (positionX - lastEventX) / scale : 0,
+      deltaY: this.canDragY() ? (positionY - lastEventY) / scale : 0,
       lastEventX: positionX,
       lastEventY: positionY,
       eventX: positionX,
@@ -214,10 +219,23 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     }
   };
 
+  canDragX = () => {
+    const { axis } = this.props;
+    return axis?.includes(DragAxis.x);
+  };
+
+  canDragY = () => {
+    const { axis } = this.props;
+    return axis?.includes(DragAxis.y);
+  };
 
   render() {
-    return React.cloneElement(React.Children.only(this.props?.children), {
-      ref: this.props?.forwardedRef
+    const { children, className, style, forwardedRef, transform } = this.props;
+    return React.cloneElement(React.Children.only(children), {
+      className: className,
+      ref: forwardedRef,
+      style: { ...children.props.style, ...style },
+      transform: transform
     });
   }
 }

@@ -43,11 +43,13 @@ export interface BoundsInterface {
     bottom: number;
     boundsParent: string | HTMLElement;
 }
-export interface DraggableEventProps {
+export interface BaseDragProps {
     children?: any;
-    onDragStart?: EventHandler;
-    onDrag?: EventHandler;
-    onDragStop?: EventHandler;
+    className?: string;
+    style?: CSSProperties;
+    transform?: string;
+    axis?: string[];
+    scale: number;
     allowAnyClick?: boolean;
     disabled?: boolean;
     handle?: string | HTMLElement;
@@ -57,28 +59,21 @@ export interface DraggableEventProps {
     locationParent?: string | HTMLElement;
     forwardedRef?: any;
 }
-export interface DraggableProps {
+export interface DraggableEventProps extends BaseDragProps {
+    onDragStart?: EventHandler;
+    onDrag?: EventHandler;
+    onDragStop?: EventHandler;
+}
+export interface DraggableProps extends BaseDragProps {
     children?: any;
-    allowAnyClick?: boolean;
-    disabled?: boolean;
-    handle?: string | HTMLElement;
-    disabledNode?: string | HTMLElement;
-    enableUserSelectHack?: boolean;
-    grid?: [number, number];
-    scale: number;
     x?: number;
     y?: number;
-    axis?: string[];
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
-    className?: string;
-    style?: CSSProperties;
-    transform?: string;
+    fixed?: boolean;
     onDragStart?: DragHandler;
     onDrag?: DragHandler;
     onDragStop?: DragHandler;
-    forwardedRef?: any;
-    fixed?: boolean;
 }
 export declare enum DragTypes {
     dragStart = "dragStart",

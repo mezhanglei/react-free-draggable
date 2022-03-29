@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 /**
  * 接收类名或节点，返回节点
  * @param target 目标参数
@@ -9,6 +10,16 @@ export declare const findElement: (target: any) => null | HTMLElement;
  * @param {*} child 目标元素
  */
 export declare function isContains(root: HTMLElement, child: HTMLElement): boolean;
+/**
+ * 给目标节点设置样式,并返回旧样式
+ * @param {*} style 样式对象
+ * @param {*} node 目标元素
+ */
+export declare function setStyle(style: any, node?: HTMLElement): CSSProperties;
+export declare function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | {
+    x: number;
+    y: number;
+};
 /**
  * 返回事件对象相对于父元素的真实位置
  * @param el 事件对象
@@ -45,10 +56,10 @@ export declare function getTranslation(current: {
     y: number;
 } | undefined, unit: string): string | undefined;
 export declare function getBoundsInParent(node: HTMLElement, bounds: any): {
-    left: number;
-    right: number;
-    top: number;
-    bottom: number;
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
 } | undefined;
 export declare function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface;
 /**

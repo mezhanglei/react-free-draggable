@@ -2,25 +2,29 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-6.1.9-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-7.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
-利用transform实现的自由拖拽组件, 拖拽过程不影响页面布局
+利用transform实现的自由拖拽组件, 拖拽过程不影响页面布局.
 
-# features
+# Draggbale组件
 
 - 利用tranform实现element元素或svg元素拖拽移动,性能高,流畅
 - 可设置拖拽边界`bounds`来限制拖拽的范围,默认全屏拖拽
 - 被包裹的`props.children`的其他属性(非拖拽相关的属性)不会受到`react-free-draggable`影响.仍和没有被包裹一样.
 - 当元素为`position: absolute`时, `x, y`支持受控，参考坐标系为`bounds`元素
 
+# DraggableEvent组件
+
+- 仅提供拖拽能力.
+- 可设置`eventBounds`表示拖拽过程中涉及的位置的参照对象。
+
 # 注意事项
 
 1. 子元素不能为行内(inline)类型元素,因为transform对行内元素无效!
 2. `props.children`限制为单个闭合标签!
-3. `DraggableEvent`组件为事件处理组件,提供给开发者在移动目标时事件对象处理的灵活api实现一些定制行为.
-4. 组件的拖拽事件涉及的位置均以`bounds`元素为参考坐标系.
+3. 组件的拖拽事件涉及的位置均以`bounds`元素为参考坐标系.
 
 ### 快速安装
 ```
@@ -65,7 +69,7 @@ import Draggable from 'react-free-draggable';
 | y                             | `number`                          | -                                                  | 元素为`position: absolute`时, 受控y轴位置，相对于`bounds`父元素为参考点改变`transform`属性                                                                                  |
 | axis                          | `['x','y']`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
-| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, boundsParent: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
+| bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, element: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
 | fixed                   | `boolean`                | -                                               | 当为非受控组件时，固定拖拽位置                                 |
 
 

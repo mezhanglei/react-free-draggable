@@ -15,14 +15,14 @@ import ReactDOM from 'react-dom';
  const wrapClassNameDragged = "react-draggable-dragged";
  class Draggable extends React.Component<DraggableProps, DraggableState> {
    // 初始位置
-   initX?: number;
-   initY?: number;
+   initX: number | undefined;
+   initY: number | undefined;
    // 拖拽补偿
    slackX: number;
    slackY: number;
-   dragType?: DragTypes;
+   dragType: DragTypes | undefined;
    lastDragData: DragData | {};
-   isUninstall?: boolean;
+   isUninstall: boolean | undefined;
    constructor(props: DraggableProps) {
      super(props);
      this.slackX = 0;
@@ -37,7 +37,7 @@ import ReactDOM from 'react-dom';
  
    componentDidMount() {
      const child = this.findDOMNode();
-     const parent = this.getLocationParent();
+     const parent = this.getBoundsParent();
      const pos = getInsidePosition(child, parent);
      const initXY = pos && {
        x: pos?.left,
@@ -55,8 +55,9 @@ import ReactDOM from 'react-dom';
    // 非拖拽元素设置translate，根据输入的x，y位置转换为translate距离
    setDragdata = (oldDragData: DragData, newX?: number, newY?: number) => {
      const child = this.findDOMNode();
-     const initX = this.initX as number;
-     const initY = this.initY as number;
+     const initX = this.initX;
+     const initY = this.initY;
+     if(typeof initX !== 'number' || typeof initY !== 'number') return;
      const translateX = typeof newX === 'number' ? (newX - initX) : undefined;
      const translateY = typeof newY === 'number' ? (newY - initY) : undefined;
      const newDragData = mergeObject(oldDragData, {
@@ -109,16 +110,16 @@ import ReactDOM from 'react-dom';
    }
  
    // 获取定位父元素，涉及的位置相对于该父元素
-   getLocationParent = () => {
+   getBoundsParent = () => {
      const { bounds } = this.props;
-     const parent = findElement(bounds) || findElement((bounds as BoundsInterface)?.boundsParent) || document.body || document.documentElement;
+     const parent = findElement(bounds) || findElement((bounds as BoundsInterface)?.element) || document.body || document.documentElement;
      return parent;
    }
  
    onDragStart: EventHandler = (e, data) => {
      this.dragType = DragTypes.dragStart;
      const node = data?.node;
-     const parent = this.getLocationParent();
+     const parent = this.getBoundsParent();
      const pos = getInsidePosition(node, parent);
      if (!data || !pos) return;
      let positionX = pos?.left;
@@ -254,6 +255,7 @@ import ReactDOM from 'react-dom';
          style={mergeObject({ ...children.props.style, ...style }, {
            transform: !isSVG && getTranslation(currentPosition, positionOffset, 'px')
          })}
+         showLayer={false}
          className={cls}
          transform={isSVG ? getTranslation(currentPosition, positionOffset, '') : (transform ?? (children.props?.transform || ""))}
          onDragStart={this.onDragStart}

@@ -41,7 +41,7 @@ export interface BoundsInterface {
     right: number;
     top: number;
     bottom: number;
-    boundsParent: string | HTMLElement;
+    element: string | HTMLElement;
 }
 export interface BaseDragProps {
     children?: any;
@@ -56,13 +56,15 @@ export interface BaseDragProps {
     disabledNode?: string | HTMLElement;
     enableUserSelectHack?: boolean;
     grid?: [number, number];
-    locationParent?: string | HTMLElement;
+    eventBounds?: string | HTMLElement;
     forwardedRef?: any;
 }
 export interface DraggableEventProps extends BaseDragProps {
     onDragStart?: EventHandler;
     onDrag?: EventHandler;
     onDragStop?: EventHandler;
+    showLayer?: boolean;
+    layerStyle?: CSSProperties;
 }
 export interface DraggableProps extends BaseDragProps {
     children?: any;

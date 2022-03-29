@@ -56,7 +56,7 @@ export interface BoundsInterface {
   right: number;
   top: number;
   bottom: number;
-  boundsParent: string | HTMLElement;
+  element: string | HTMLElement;
 }
 
 // 基础拖拽属性
@@ -73,7 +73,7 @@ export interface BaseDragProps {
   disabledNode?: string | HTMLElement; // 不允许拖拽的选择器
   enableUserSelectHack?: boolean; // 允许添加选中样式
   grid?: [number, number]; // 设置x,y方向的拖拽幅度，多少幅度移动一次目标
-  locationParent?: string | HTMLElement; // 定位父元素, 设置之后拖拽过程的位置以父元素作为参考
+  eventBounds?: string | HTMLElement; // 定位父元素, 设置之后拖拽过程的位置以父元素作为参考
   forwardedRef?: any;
 }
 
@@ -82,6 +82,8 @@ export interface DraggableEventProps extends BaseDragProps {
   onDragStart?: EventHandler; // 拖拽开始事件
   onDrag?: EventHandler; // 拖拽进行事件
   onDragStop?: EventHandler; // 拖拽结束事件
+  showLayer?: boolean; // 是否展示拖拽阴影浮层
+  layerStyle?: CSSProperties; // 浮层的样式
 }
 
 // Draggable的props的类型

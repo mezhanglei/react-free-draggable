@@ -31,11 +31,11 @@ export interface PositionType {
     x: number;
     y: number;
 }
-export declare enum DragAxis {
-    x = "x",
-    y = "y"
+export declare enum DragDirection {
+    Vertical = "vertical",
+    Horizontal = "horizontal"
 }
-export declare const DragAxisCode: DragAxis[];
+export declare const DragDirectionCode: DragDirection[];
 export interface BoundsInterface {
     left: number;
     right: number;
@@ -48,21 +48,22 @@ export interface BaseDragProps {
     className?: string;
     style?: CSSProperties;
     transform?: string;
-    axis?: string[];
-    scale: number;
+    direction?: string[];
+    scale?: number;
     allowAnyClick?: boolean;
     disabled?: boolean;
     handle?: string | HTMLElement;
-    disabledNode?: string | HTMLElement;
+    filter?: string | HTMLElement;
     enableUserSelectHack?: boolean;
     grid?: [number, number];
     eventBounds?: string | HTMLElement;
     forwardedRef?: any;
+    childProps?: any;
 }
 export interface DraggableEventProps extends BaseDragProps {
-    onDragStart?: EventHandler;
-    onDrag?: EventHandler;
-    onDragStop?: EventHandler;
+    onStart?: EventHandler;
+    onMove?: EventHandler;
+    onEnd?: EventHandler;
     showLayer?: boolean;
     layerStyle?: CSSProperties;
 }
@@ -73,14 +74,14 @@ export interface DraggableProps extends BaseDragProps {
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
     fixed?: boolean;
-    onDragStart?: DragHandler;
-    onDrag?: DragHandler;
-    onDragStop?: DragHandler;
+    onStart?: DragHandler;
+    onMove?: DragHandler;
+    onEnd?: DragHandler;
 }
 export declare enum DragTypes {
-    dragStart = "dragStart",
-    draging = "draging",
-    dragEnd = "dragEnd"
+    Start = "start",
+    Move = "move",
+    End = "end"
 }
 export interface DraggableState {
     dragData: DragData;

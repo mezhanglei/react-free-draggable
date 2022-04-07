@@ -10,12 +10,8 @@ export declare const findElement: (target: any) => null | HTMLElement;
  * @param {*} child 目标元素
  */
 export declare function isContains(root: HTMLElement, child: HTMLElement): boolean;
-/**
- * 给目标节点设置样式,并返回旧样式
- * @param {*} style 样式对象
- * @param {*} node 目标元素
- */
-export declare function setStyle(style: any, node?: HTMLElement): CSSProperties;
+export declare const getWindow: (el?: any) => any;
+export declare function css(el: any, prop?: string | CSSProperties): any;
 export declare function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | {
     x: number;
     y: number;

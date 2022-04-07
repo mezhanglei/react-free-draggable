@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import { getPrefixStyle } from "./cssPrefix";
 import { isDom, isEmpty, isNumber } from "./type";
 
 /**
@@ -25,25 +26,28 @@ import { isDom, isEmpty, isNumber } from "./type";
   return root.contains(child);
 };
 
-/**
- * 给目标节点设置样式,并返回旧样式
- * @param {*} style 样式对象
- * @param {*} node 目标元素
- */
- export function setStyle(style: any, node: HTMLElement = document.body || document.documentElement): CSSProperties {
-  const oldStyle: any = {};
+// 获取当前的window
+export const getWindow = (el?: any) => {
+  const ownerDocument = el?.ownerDocument || document?.ownerDocument;
+  return ownerDocument ? (ownerDocument.defaultView || window) : window;
+};
 
-  const styleKeys: string[] = Object.keys(style);
-
-  styleKeys.forEach(key => {
-    oldStyle[key] = (node.style as any)[key];
-  });
-
-  styleKeys.forEach(key => {
-    (node.style as any)[key] = (style as any)[key];
-  });
-
-  return oldStyle;
+// 获取或设置目标元素的style值
+export function css(el: any, prop?: string | CSSProperties) {
+  let style = el && el.style;
+  const win = getWindow(el);
+  if (style) {
+    const ownerStyle = win.getComputedStyle(el, '') || el.currentStyle;
+    if (prop === void 0) {
+      return ownerStyle;
+    } else if (typeof prop === 'string') {
+      return ownerStyle[prop];
+    } else if (typeof prop === 'object') {
+      for (const key in prop) {
+        style[getPrefixStyle(key)] = prop[key]
+      }
+    }
+  }
 }
 
 // 返回元素或事件对象的视口位置

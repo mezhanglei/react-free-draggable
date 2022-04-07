@@ -13,7 +13,7 @@ const Home: React.FC<any> = (props) => {
                     scale={1}
                 >
                     <div style={{ display: "inline-block" }}>
-                        <div className="handle" style={{ display: "inline-block", width: "80px", background: "blue", cursor: "pointer", height: "100%" }} type="default">
+                        <div className="handle" style={{ display: "inline-block", width: "80px", background: "blue", cursor: "pointer", height: "100%" }}>
                             拖拽元素
                         </div>
                     </div>

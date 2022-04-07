@@ -2,11 +2,15 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-7.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-7.1.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
 利用transform实现的自由拖拽组件, 拖拽过程不影响页面布局.
+
+# version7.x
+
+更新了全新的api
 
 # Draggbale组件
 
@@ -43,7 +47,7 @@ import Draggable from 'react-free-draggable';
         scale={1}
         >
             <div style={{ display: "inline-block" }}>
-                <div className="handle" style={{ display: "inline-block", width: "80px",background: "blue", cursor: "pointer", height: "100%" }} type="default" onClick={this.clickToast}>
+                <div className="handle" style={{ display: "inline-block", width: "80px",background: "blue", cursor: "pointer", height: "100%" }} onClick={this.clickToast}>
                     拖拽元素
                 </div>
             </div>
@@ -56,20 +60,21 @@ import Draggable from 'react-free-draggable';
 | 名称                          | 类型                  | 默认值                                                         | 描述                                                                                                      |
 | ----------------------------- | --------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | handle                      | `string / HTMLElement`            | -                                                  | 拖拽元素的类选择器或元素                                                                                  |
-| disabledNode                  | `string / HTMLElement`            | -                                                  | 不允许拖拽的选择器或元素                                                                              |
+| filter                  | `string / HTMLElement`            | -                                                  | 不允许拖拽的选择器或元素                                                                              |
 | enableUserSelectHack          | `boolean`                         | -                                                  | 允许添加选中样式                                                  |
 | grid                          | `[number, number]`                | -                                                  | 设置x,y方向幅度，多少幅度移动一次目标                                                                              |
 | disabled                      | `boolean`                         | -                                                  | 禁止拖拽                                                                                          |
 | allowAnyClick                 | `boolean`                         | -                                                  | 表示允许非鼠标左键单击拖动                                                                                          |
-| onDragStart                   | `function`                        | -                                                  | 拖拽开始事件                                                                                           |
-| onDrag                        | `function`                        | -                                                  | 拖拽进行事件                      |
-| onDragStop                    | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
+| onStart                   | `function`                        | -                                                  | 拖拽开始事件                                                                                           |
+| onMove                        | `function`                        | -                                                  | 拖拽进行事件                      |
+| onEnd                    | `function`                        | -                                                  | 拖拽结束事件                                                                                  |
 | scale                         | `number`                          | 1                                                  | 拖拽灵敏度                                                                                  |
 | x                             | `number`                          | -                                                  | 元素为`position: absolute`时, 受控x轴位置，相对于`bounds`的父元素为参考点改变`transform`属性                                                                                  |
 | y                             | `number`                          | -                                                  | 元素为`position: absolute`时, 受控y轴位置，相对于`bounds`父元素为参考点改变`transform`属性                                                                                  |
-| axis                          | `['x','y']`             | -                                                  | 限制拖拽运动方向                                                                                  |
+| direction                          | `['vertical','horizontal']`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, element: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
 | fixed                   | `boolean`                | -                                               | 当为非受控组件时，固定拖拽位置                                 |
-
-
+| childProps                   | `any`                | -                                               | 组件自身的props                                 |
+| showLayer                   | `boolean`                | -                                               | `DraggableEvent`组件中是否提供拖拽显示浮层副本                                 |
+| layerStyle                   | `CSSProperties`                | -                                               | `DraggableEvent`组件自定义显示浮层副本的样式                                 |

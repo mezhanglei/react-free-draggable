@@ -57,7 +57,7 @@ import ReactDOM from 'react-dom';
      const child = this.findDOMNode();
      const initX = this.initX;
      const initY = this.initY;
-     if(typeof initX !== 'number' || typeof initY !== 'number') return;
+     if (typeof initX !== 'number' || typeof initY !== 'number') return;
      const translateX = typeof newX === 'number' ? (newX - initX) : undefined;
      const translateY = typeof newY === 'number' ? (newY - initY) : undefined;
      const newDragData = mergeObject(oldDragData, {
@@ -116,8 +116,8 @@ import ReactDOM from 'react-dom';
      return parent;
    }
  
-   onDragStart: EventHandler = (e, data) => {
-     this.dragType = DragTypes.dragStart;
+   onStart: EventHandler = (e, data) => {
+     this.dragType = DragTypes.Start;
      const node = data?.node;
      const parent = this.getBoundsParent();
      const pos = getInsidePosition(node, parent);
@@ -125,7 +125,7 @@ import ReactDOM from 'react-dom';
      let positionX = pos?.left;
      let positionY = pos?.top;
      const { dragData } = this.state;
-     const { onDragStart } = this.props;
+     const { onStart } = this.props;
  
      const translateX = dragData?.translateX;
      const translateY = dragData?.translateY;
@@ -144,15 +144,15 @@ import ReactDOM from 'react-dom';
        dragData: newDragData
      });
      this.lastDragData = newDragData
-     onDragStart && onDragStart(e, newDragData);
+     onStart && onStart(e, newDragData);
    };
  
-   onDrag: EventHandler = (e, data) => {
+   onMove: EventHandler = (e, data) => {
      const dragType = this.dragType;
      if (!dragType || !data) return;
-     this.dragType = DragTypes.draging;
+     this.dragType = DragTypes.Move;
      const { dragData } = this.state;
-     const { bounds, onDrag } = this.props;
+     const { bounds, onMove } = this.props;
      let x = dragData?.x ?? 0;
      const y = dragData?.y ?? 0;
      let translateX = dragData?.translateX ?? 0;
@@ -204,22 +204,22 @@ import ReactDOM from 'react-dom';
      this.setState({
        dragData: newDragData
      });
-     onDrag && onDrag(e, newDragData);
+     onMove && onMove(e, newDragData);
    };
  
-   onDragStop: EventHandler = (e, data) => {
+   onEnd: EventHandler = (e, data) => {
      const { dragData } = this.state;
      const dragType = this.dragType;
-     const { onDragStop } = this.props;
+     const { onEnd } = this.props;
      if (!dragType || !dragData) return;
-     this.dragType = DragTypes.dragEnd;
+     this.dragType = DragTypes.End;
      this.slackX = 0;
      this.slackY = 0;
      const beforeEndDragData = {
        ...dragData
      }
      // 回调函数先执行然后再重置状态
-     onDragStop && onDragStop(e, beforeEndDragData as DragEventData);
+     onEnd && onEnd(e, beforeEndDragData as DragEventData);
      // 注意是否已经组件卸载
      if (!this.isUninstall) {
        // 根据props值设置translate
@@ -238,7 +238,7 @@ import ReactDOM from 'react-dom';
      const { isSVG, dragData } = this.state;
      // 包裹元素的className
      const cls = classNames((children.props?.className || ''), wrapClassName, className, {
-       [wrapClassNameDragging]: this.dragType === DragTypes.draging,
+       [wrapClassNameDragging]: this.dragType === DragTypes.Move,
        [wrapClassNameDragged]: this.dragType
      });
  
@@ -257,18 +257,18 @@ import ReactDOM from 'react-dom';
          })}
          showLayer={false}
          className={cls}
-         transform={isSVG ? getTranslation(currentPosition, positionOffset, '') : (transform ?? (children.props?.transform || ""))}
-         onDragStart={this.onDragStart}
-         onDrag={this.onDrag}
-         onDragStop={this.onDragStop}>
+         transform={isSVG ? getTranslation(currentPosition, positionOffset, '') : transform}
+         onStart={this.onStart}
+         onMove={this.onMove}
+         onEnd={this.onEnd}>
          {children}
        </DraggableEvent>
      );
    }
  }
  
- const wrapper = function (InnerComponent: any): any {
-   return React.forwardRef((props, ref) => {
+ const wrapper = function (InnerComponent: typeof Draggable) {
+   return React.forwardRef((props: DraggableProps, ref) => {
      return (
        <InnerComponent forwardedRef={ref} {...props} />
      )

@@ -49,9 +49,9 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
   }
 
   componentWillUnmount() {
-    const handle = this.findHandle();
+    const node = this.findDOMNode();
     const ownerDocument = this.findOwnerDocument();
-    removeEvent(handle, dragEventFor.start, this.handleDragStart);
+    removeEvent(node, dragEventFor.start, this.handleDragStart);
     removeEvent(ownerDocument, dragEventFor.move, this.handleDrag);
     removeEvent(ownerDocument, dragEventFor.stop, this.handleDragStop);
     // 移除选中样式
@@ -73,7 +73,7 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     const child = this.findDOMNode();
     const win = getWindow();
     const childStyle = win?.getComputedStyle(child);
-    const handle = this.props.handle ? findElement(this.props.handle) : child;
+    const handle = this.props.handle ? findElement(this.props.handle, child) : child;
     if (childStyle?.display === "inline") {
       throw new Error("the style of `props.children` cannot is `inline`, because `transform` has no effect on Element ");
     }
@@ -82,7 +82,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
 
   // 过滤的句柄
   findFilterNode = () => {
-    const node = this.props.filter && findElement(this.props.filter);
+    const child = this.findDOMNode();
+    const node = this.props.filter && findElement(this.props.filter, child);
     return node;
   };
 

@@ -6,10 +6,10 @@ import { isDom, isEmpty, isNumber } from "./type";
  * 接收类名或节点，返回节点
  * @param target 目标参数
  */
- export const findElement = (target: any): null | HTMLElement => {
+ export const findElement = (target: any, parent: any = document): null | HTMLElement => {
   let result = null;
   if (typeof target === "string") {
-    result = document.querySelector(target);
+    result = parent.querySelector(target);
   } else if (isDom(target)) {
     result = target;
   }

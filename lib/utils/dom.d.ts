@@ -3,7 +3,7 @@ import { CSSProperties } from "react";
  * 接收类名或节点，返回节点
  * @param target 目标参数
  */
-export declare const findElement: (target: any) => null | HTMLElement;
+export declare const findElement: (target: any, parent?: any) => null | HTMLElement;
 /**
  * 判断根元素是不是包含目标元素
  * @param {*} root 根元素

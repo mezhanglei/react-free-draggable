@@ -44,8 +44,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
   }
 
   componentDidMount() {
-    const handle = this.findHandle();
-    addEvent(handle, dragEventFor.start, this.handleDragStart);
+    const node = this.findDOMNode();
+    addEvent(node, dragEventFor.start, this.handleDragStart);
   }
 
   componentWillUnmount() {
@@ -173,6 +173,7 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
 
     // props控制是否拖拽
     if (
+      !handle ||
       // 禁止拖拽
       this.props?.disabled ||
       // 拖拽目标不存在

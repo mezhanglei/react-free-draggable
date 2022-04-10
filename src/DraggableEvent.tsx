@@ -39,7 +39,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
   static defaultProps = {
     direction: DragDirectionCode,
     scale: 1,
-    showLayer: true
+    showLayer: true,
+    stopBubble: true
   }
 
   componentDidMount() {
@@ -179,7 +180,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
       // handle不存在
       (handle && !matchParent(target, handle)) ||
       // 点击目标为过滤的元素
-      (filterNode && target === filterNode)) {
+      (filterNode && target === filterNode) ||
+      (!this.canDragX() && !this.canDragY())) {
       return;
     }
 

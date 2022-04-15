@@ -81,9 +81,11 @@ export interface BaseDragProps {
 // DraggableEvent的props的类型
 export interface DraggableEventProps extends BaseDragProps {
   onStart?: EventHandler; // 拖拽开始事件
+  onMoveStart?: EventHandler; // 移动开始事件
   onMove?: EventHandler; // 拖拽进行事件
   onEnd?: EventHandler; // 拖拽结束事件
   showLayer?: boolean; // 是否展示拖拽阴影浮层
+  customLayer?: any; // 自定义的阴影浮层
   layerStyle?: CSSProperties; // 浮层的样式
 }
 
@@ -98,6 +100,11 @@ export interface DraggableProps extends BaseDragProps {
   onStart?: DragHandler; // 拖拽开始事件
   onMove?: DragHandler; // 拖拽进行事件
   onEnd?: DragHandler; // 拖拽结束事件
+  width?: number; // 受控尺寸
+  height?: number; // 受控尺寸
+  onResizeStart?: EventHandler; // 拖拽开始事件
+  onResizeMoving?: EventHandler; // 拖拽进行中事件
+  onResizeEnd?: EventHandler; // 拖拽结束事件
 }
 
 // 拖拽类型

@@ -62,9 +62,11 @@ export interface BaseDragProps {
 }
 export interface DraggableEventProps extends BaseDragProps {
     onStart?: EventHandler;
+    onMoveStart?: EventHandler;
     onMove?: EventHandler;
     onEnd?: EventHandler;
     showLayer?: boolean;
+    customLayer?: any;
     layerStyle?: CSSProperties;
 }
 export interface DraggableProps extends BaseDragProps {
@@ -77,6 +79,11 @@ export interface DraggableProps extends BaseDragProps {
     onStart?: DragHandler;
     onMove?: DragHandler;
     onEnd?: DragHandler;
+    width?: number;
+    height?: number;
+    onResizeStart?: EventHandler;
+    onResizeMoving?: EventHandler;
+    onResizeEnd?: EventHandler;
 }
 export declare enum DragTypes {
     Start = "start",

@@ -28,9 +28,11 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
   child: any;
   cloneLayer: any;
   initPos: { left: number, top: number } | undefined
+  moveStartFlag: boolean;
   constructor(props: DraggableEventProps) {
     super(props);
     this.dragging = false;
+    this.moveStartFlag = true;
     this.eventData = undefined;
     this.state = {
     };
@@ -142,19 +144,8 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
   removeLayerNode = () => {
     const { showLayer } = this.props;
     if (!showLayer) return;
-    const node = this.findDOMNode();
     const ownerDocument = this.findOwnerDocument();
-    const clientXY = getClientXY(node);
-    if (this.cloneLayer && clientXY) {
-      css(this.cloneLayer, {
-        left: clientXY.x + 'px',
-        top: clientXY?.y + 'px',
-        transition: 'all 0.1s'
-      })
-    }
-    setTimeout(() => {
-      ownerDocument.body.removeChild(this.cloneLayer)
-    }, 100);
+    ownerDocument.body.removeChild(this.cloneLayer);
   }
 
   handleDragStart = (e: EventType) => {
@@ -207,8 +198,7 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
 
     this.initLayerNode();
     // 如果没有完成渲染或者返回false则禁止拖拽
-    const shouldUpdate = this.props?.onStart && this.props?.onStart(e, this.eventData);
-    if (shouldUpdate === false) return;
+    this.props?.onStart && this.props?.onStart(e, this.eventData);
 
     // 滚动过程中选中文本被添加样式
     if (this.props?.enableUserSelectHack) addUserSelectStyles(ownerDocument);
@@ -247,19 +237,12 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
       eventY: positionY
     }
     this.setLayerNode({ deltaX: this.eventData?.deltaX, deltaY: this.eventData?.deltaY });
-    // 返回false则禁止拖拽并初始化鼠标事件
-    const shouldUpdate = this.props?.onMove && this.props?.onMove(e, this.eventData);
-    if (shouldUpdate === false) {
-      try {
-        this.handleDragStop(new MouseEvent(e?.type));
-      } catch (err) {
-        // 兼容废弃版本
-        const event = document.createEvent('MouseEvents');
-        event.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        this.handleDragStop(event);
-      }
-      return;
+
+    if (this.moveStartFlag) {
+      this.props?.onMoveStart && this.props?.onMoveStart(e, this.eventData);
     }
+    this.moveStartFlag = false
+    this.props?.onMove && this.props?.onMove(e, this.eventData);
   };
 
   handleDragStop = (e: EventType) => {
@@ -271,23 +254,21 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
       deltaX: 0,
       deltaY: 0
     }
+    // 重置
     this.removeLayerNode()
-    const shouldContinue = this.props?.onEnd && this.props?.onEnd(e, this.eventData);
-    if (shouldContinue === false) return;
-
+    this.moveStartFlag = true;
+    this.dragging = false;
     // 移除文本因滚动造成的显示
     if (ownerDocument) {
       // Remove user-select hack
       if (this.props?.enableUserSelectHack) removeUserSelectStyles(ownerDocument);
     }
 
-    // 重置
-    this.dragging = false;
-
     if (ownerDocument) {
       removeEvent(ownerDocument, dragEventFor.move, this.handleDrag);
       removeEvent(ownerDocument, dragEventFor.stop, this.handleDragStop);
     }
+    this.props?.onEnd && this.props?.onEnd(e, this.eventData);
   };
 
   canDragX = () => {

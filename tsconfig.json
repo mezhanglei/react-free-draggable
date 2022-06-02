@@ -4,7 +4,7 @@
 
     /* Basic Options */
     // "incremental": true,                   /* 增量编译 */
-    "target": "ESNEXT",                          /* 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
+    "target": "es5",                          /* 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
     "module": "esnext",                       /* 指定模块: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     // "lib": [],                             /* Specify library files to be included in the compilation. */
     // "allowJs": true,                       /* 允许js文件被编译 */
@@ -70,8 +70,9 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
 
     /* Advanced Options */
-    "skipLibCheck": false,                     /* 忽略所有库中的声明文件（ *.d.ts）的类型检查。 */
-    "forceConsistentCasingInFileNames": true  /* 强制区分大小写 */
+    "skipLibCheck": true,                     /* 忽略所有库中的声明文件（ *.d.ts）的类型检查。 */
+    "forceConsistentCasingInFileNames": true,  /* 强制区分大小写 */
+    "suppressImplicitAnyIndexErrors": true     /* 阻止对缺少索引签名的索引对象报错 */
   },
   // 编译的文件位置
   "include": [

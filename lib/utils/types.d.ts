@@ -79,11 +79,6 @@ export interface DraggableProps extends BaseDragProps {
     onStart?: DragHandler;
     onMove?: DragHandler;
     onEnd?: DragHandler;
-    width?: number;
-    height?: number;
-    onResizeStart?: EventHandler;
-    onResizeMoving?: EventHandler;
-    onResizeEnd?: EventHandler;
 }
 export declare enum DragTypes {
     Start = "start",

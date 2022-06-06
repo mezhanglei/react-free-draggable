@@ -6,15 +6,15 @@
   "presets": [
     [
       "@babel/preset-env",
-      {
-        "modules": false, // 禁止将es模块类型转换为其他类型
-        // entry时需要在入口文件添加两行代码:import "core-js/stable"; import "regenerator-runtime/runtime"
-        "useBuiltIns": "entry",
-        "corejs": {
-          "version": 3,
-          "proposals": true
-        }
-      }
+      // {
+      //   "modules": false, // 禁止将es模块类型转换为其他类型
+      //   // entry时需要在入口文件添加两行代码:import "core-js/stable"; import "regenerator-runtime/runtime"
+      //   "useBuiltIns": "entry",
+      //   "corejs": {
+      //     "version": 3,
+      //     "proposals": true
+      //   }
+      // }
     ],
     // 和ts-loader方案二选一，目的是把ts转为js
     "@babel/preset-typescript",
@@ -23,16 +23,16 @@
   ],
   "plugins": [
     // 此插件将helpers和polyfill都改为从一个统一的地方引入, 按需引入@babel/runtime-corejs3中的模块而不是直接修改全局变量或者全局变量原型，导致不可预知的问题，开发库时必选.
-    // [
-    //   "@babel/plugin-transform-runtime",
-    //   {
-    //     // 使用特性,需要安装@babel/runtime-corejs3
-    //     "corejs": {
-    //       "version": 3,
-    //       "proposals": true // 默认情况不会使用提案中的，true则使用
-    //     }
-    //   }
-    // ],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        // 使用特性,需要安装@babel/runtime-corejs3
+        "corejs": {
+          "version": 3,
+          "proposals": true // 默认情况不会使用提案中的，true则使用
+        }
+      }
+    ],
     // 异步加载语法解析插件,解析import().then()这种语法
     "@babel/plugin-syntax-dynamic-import",
     // 类的装饰器提案(必须在@babel/plugin-proposal-class-properties前面)
@@ -45,7 +45,6 @@
     // 编译静态属性和类属性
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
     ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-    
     // babel-plugin-import配置类库按需加载
     [
       "import",

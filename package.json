@@ -1,8 +1,8 @@
 {
   "name": "react-free-draggable",
-  "version": "7.1.6",
+  "version": "7.1.8",
   "description": "transform实现的自由拖拽组件",
-  "main": "lib/bundle.js",
+  "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "repository": "https://github.com/mezhanglei",
   "files": [

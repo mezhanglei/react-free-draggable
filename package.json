@@ -1,6 +1,6 @@
 {
   "name": "react-free-draggable",
-  "version": "7.1.8",
+  "version": "7.1.9",
   "description": "transform实现的自由拖拽组件",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
@@ -36,6 +36,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@babel/runtime": "^7.20.1",
     "@babel/runtime-corejs3": "^7.17.9",
     "@types/classnames": "^2.2.11",
     "@types/react": "^16.14.21",

@@ -120,8 +120,9 @@ export function getOffsetWH(el: HTMLElement): undefined | {
     return;
   }
   if ([document.documentElement, document.body].includes(el)) {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const win = getWindow(el);
+    const width = win.innerWidth;
+    const height = win.innerHeight;
     return { width, height };
   } else {
     const width = el.offsetWidth;
@@ -184,7 +185,8 @@ export function removeUserSelectStyles(doc: any): void {
     } else {
       // Remove selection caused by scroll, unless it's a focused input
       // (we use doc.defaultView in case we're in an iframe)
-      const selection = (doc.defaultView || window).getSelection();
+      const win = getWindow();
+      const selection = (doc.defaultView || win).getSelection();
       if (selection && selection.type !== 'Caret') {
         selection.removeAllRanges();
       }

@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-7.1.9-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.0.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -74,8 +74,7 @@ import Draggable from 'react-free-draggable';
 | direction                          | `['vertical','horizontal']`              | -                                                  | the direction of drag and drop                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, element: string / HTMLElement }`                   | -              | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `element` element                                                                                          |
-| fixed                   | `boolean`                | -                                               | Fixed dragging position when it is a non-controlled component                                |
-| childProps                   | `any`                | -                                               | children's props                                 |
+| restoreOnEnd                   | `boolean`                | -                                               | Restore position when drag end                                |
 | showLayer                   | `boolean`                | -                                               | `DraggableEvent` component's display of the layer copy                                  |
 | layerStyle                   | `CSSProperties`                | -                                               | `DraggableEvent` component custom the style of the layer copy
 

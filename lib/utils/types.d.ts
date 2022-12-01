@@ -58,7 +58,6 @@ export interface BaseDragProps {
     grid?: [number, number];
     eventBounds?: string | HTMLElement;
     forwardedRef?: any;
-    childProps?: any;
 }
 export interface DraggableEventProps extends BaseDragProps {
     onStart?: EventHandler;
@@ -75,7 +74,7 @@ export interface DraggableProps extends BaseDragProps {
     y?: number;
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
-    fixed?: boolean;
+    restoreOnEnd?: boolean;
     onStart?: DragHandler;
     onMove?: DragHandler;
     onEnd?: DragHandler;

@@ -12,6 +12,12 @@ export declare const findElement: (target: any, parent?: any) => null | HTMLElem
 export declare function isContains(root: HTMLElement, child: HTMLElement): boolean;
 export declare const getWindow: (el?: any) => any;
 export declare function css(el: any, prop?: string | CSSProperties): any;
+/**
+ * 查询元素是否在某个元素内
+ * @param el 元素
+ * @param parent 父元素
+ */
+export declare function matchParent(el: any, parent: HTMLElement): boolean;
 export declare function getClientXY(el: MouseEvent | TouchEvent | HTMLElement): null | {
     x: number;
     y: number;
@@ -25,6 +31,12 @@ export declare function getEventPosition(el: MouseEvent | TouchEvent, parent?: H
     x: number;
     y: number;
 };
+/**
+ * 返回元素的视窗内的位置
+ * @param el
+ * @returns
+ */
+export declare function getRect(el: HTMLElement): DOMRect;
 export declare function getOffsetWH(el: HTMLElement): undefined | {
     width: number;
     height: number;
@@ -35,41 +47,6 @@ export declare function getInsidePosition(el: HTMLElement, parent?: HTMLElement)
     right: number;
     bottom: number;
 };
-export declare const addUserSelectStyles: (doc: any) => any;
-export declare function removeUserSelectStyles(doc: any): void;
-export declare function addClassName(el: HTMLElement, className: string): void;
-export declare function removeClassName(el: HTMLElement, className: string): void;
-export declare function snapToGrid(grid: [number, number], pendingX: number, pendingY: number): [number, number];
-export interface PositionInterface {
-    x: number;
-    y: number;
-}
-export declare function getTranslation(current: {
-    x?: number;
-    y?: number;
-}, positionOffset: {
-    x: number;
-    y: number;
-} | undefined, unit: string): string | undefined;
-export declare function getBoundsInParent(node: HTMLElement, bounds: any): {
-    minX: number;
-    maxX: number;
-    minY: number;
-    maxY: number;
-} | undefined;
-export declare function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface;
-/**
- * 返回元素的视窗内的位置
- * @param el
- * @returns
- */
-export declare function getRect(el: HTMLElement): DOMRect;
-/**
- * 查询元素是否在某个元素内
- * @param el 元素
- * @param parent 父元素
- */
-export declare function matchParent(el: any, parent: HTMLElement): boolean;
 /**
  * 添加事件监听
  * @param el 目标元素

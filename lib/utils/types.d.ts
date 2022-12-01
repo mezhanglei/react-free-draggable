@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 export type EventType = MouseEvent | TouchEvent;
 export interface EventData {
-    node?: any;
+    target?: any;
     deltaX: number;
     deltaY: number;
     eventX: number;
@@ -10,7 +10,7 @@ export interface EventData {
     lastEventY: number;
 }
 export interface DragData {
-    node?: any;
+    target?: any;
     x?: number;
     y?: number;
     deltaX?: number;
@@ -19,7 +19,7 @@ export interface DragData {
     translateY?: number;
 }
 export interface DragEventData {
-    node: any;
+    target: any;
     x: number;
     y: number;
     deltaX: number;
@@ -91,5 +91,5 @@ export interface DraggableState {
     prevX?: number;
     prevY?: number;
 }
-export type EventHandler<E = EventType, T = EventData> = (e: E, data?: T) => void | boolean;
-export type DragHandler<E = EventType, T = DragEventData> = (e: E, data?: T) => void | boolean;
+export type EventHandler<E = EventType & EventData> = (e: E) => void | boolean;
+export type DragHandler<E = EventType & DragEventData> = (e: E) => void | boolean;

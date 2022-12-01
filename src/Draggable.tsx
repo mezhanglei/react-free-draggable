@@ -120,12 +120,14 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     return parent;
   }
 
-  onStart: EventHandler = (e, data) => {
+  onStart: EventHandler = (e) => {
     this.dragType = DragTypes.Start;
-    const node = data?.node;
+    const node = e?.target;
+    const deltaX = e?.deltaX;
+    const deltaY = e?.deltaY;
     const parent = this.getBoundsParent();
     const pos = getInsidePosition(node, parent);
-    if (!data || !pos) return;
+    if (!pos) return;
     let positionX = pos?.left;
     let positionY = pos?.top;
     const { dragData } = this.state;
@@ -139,21 +141,21 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
       translateX,
       translateY,
       x: positionX, y: positionY,
-      deltaX: data?.deltaX,
-      deltaY: data?.deltaY,
-      node
+      deltaX: deltaX,
+      deltaY: deltaY,
+      target: node
     }
 
     this.setState({
       dragData: newDragData
     });
     this.lastDragData = newDragData
-    onStart && onStart(e, newDragData);
+    onStart && onStart({ ...e, ...newDragData });
   };
 
-  onMove: EventHandler = (e, data) => {
+  onMove: EventHandler = (e) => {
     const dragType = this.dragType;
-    if (!dragType || !data) return;
+    if (!dragType) return;
     this.dragType = DragTypes.Move;
     const { dragData } = this.state;
     const { bounds, onMove } = this.props;
@@ -161,16 +163,17 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     const y = dragData?.y ?? 0;
     let translateX = dragData?.translateX ?? 0;
     let translateY = dragData?.translateY ?? 0;
+    const { target, deltaX, deltaY } = e;
 
     // 拖拽生成的位置信息
     const newDragData = {
-      node: data.node,
-      translateX: translateX + data?.deltaX,
-      translateY: translateY + data.deltaY,
-      deltaX: data?.deltaX,
-      deltaY: data?.deltaY,
-      x: x + data?.deltaX,
-      y: y + data.deltaY
+      target: target,
+      translateX: translateX + deltaX,
+      translateY: translateY + deltaY,
+      deltaX: deltaX,
+      deltaY: deltaY,
+      x: x + deltaX,
+      y: y + deltaY
     };
 
     if (!newDragData) return;
@@ -183,10 +186,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
       nowX += this.slackX;
       nowY += this.slackY;
 
-      // 边界处理
-      const node = data?.node;
-
-      const boundsXY = getPositionByBounds(node, { x: nowX, y: nowY }, bounds);
+      const boundsXY = getPositionByBounds(target, { x: nowX, y: nowY }, bounds);
       nowX = boundsXY.x;
       nowY = boundsXY.y;
       const nowTranslateX = translateX + nowX - x;
@@ -208,10 +208,10 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     this.setState({
       dragData: newDragData
     });
-    onMove && onMove(e, newDragData);
+    onMove && onMove({ ...e, ...newDragData });
   };
 
-  onEnd: EventHandler = (e, data) => {
+  onEnd: EventHandler = (e) => {
     const { dragData } = this.state;
     const dragType = this.dragType;
     const isUninstall = this.isUninstall;
@@ -222,16 +222,16 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     this.slackX = 0;
     this.slackY = 0;
     // 回调函数先执行然后再重置状态
-    onEnd && onEnd(e, dragData as DragEventData);
+    onEnd && onEnd({ ...e, ...dragData as DragEventData });
     // 注意是否已经组件卸载
     if (!isUninstall) {
       // 根据props值设置translate
       const xChanged = x !== undefined && x !== dragData?.x;
       const yChanged = y !== undefined && y !== dragData?.y;
-      if (xChanged || yChanged) {
-        this.setDragdata(lastDragData, x, y);
-      } else if (restoreOnEnd) {
+      if (restoreOnEnd) {
         this.setDragdata(lastDragData, undefined, undefined);
+      } else if (xChanged || yChanged) {
+        this.setDragdata(lastDragData, x, y);
       }
     }
   };

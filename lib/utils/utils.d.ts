@@ -1,3 +1,4 @@
+import { DraggableProps } from "./types";
 export declare const addUserSelectStyles: (doc: any) => any;
 export declare function removeUserSelectStyles(doc: any): void;
 export declare function addClassName(el: HTMLElement, className: string): void;
@@ -20,4 +21,4 @@ export declare function getBoundsInParent(node: HTMLElement, bounds: any): {
     minY: number;
     maxY: number;
 } | undefined;
-export declare function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: any): PositionInterface;
+export declare function getPositionByBounds(node: HTMLElement, position: PositionInterface, bounds: DraggableProps['bounds']): PositionInterface;

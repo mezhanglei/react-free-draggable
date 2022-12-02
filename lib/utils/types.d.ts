@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 export type EventType = MouseEvent | TouchEvent;
-export interface EventData {
+export type DragEventData = EventType & {
     target?: any;
     deltaX: number;
     deltaY: number;
@@ -8,25 +8,13 @@ export interface EventData {
     eventY: number;
     lastEventX: number;
     lastEventY: number;
-}
-export interface DragData {
-    target?: any;
+};
+export type DragData = EventType & {
     x?: number;
     y?: number;
-    deltaX?: number;
-    deltaY?: number;
     translateX?: number;
     translateY?: number;
-}
-export interface DragEventData {
-    target: any;
-    x: number;
-    y: number;
-    deltaX: number;
-    deltaY: number;
-    translateX?: number;
-    translateY?: number;
-}
+};
 export interface PositionType {
     x: number;
     y: number;
@@ -47,7 +35,6 @@ export interface BaseDragProps {
     children?: any;
     className?: string;
     style?: CSSProperties;
-    transform?: string;
     direction?: string[];
     scale?: number;
     allowAnyClick?: boolean;
@@ -75,6 +62,7 @@ export interface DraggableProps extends BaseDragProps {
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
     restoreOnEnd?: boolean;
+    transform?: string;
     onStart?: DragHandler;
     onMove?: DragHandler;
     onEnd?: DragHandler;
@@ -85,11 +73,11 @@ export declare enum DragTypes {
     End = "end"
 }
 export interface DraggableState {
-    dragData: DragData;
+    dragData?: DragData;
     dragType?: DragTypes;
     isSVG: boolean;
     prevX?: number;
     prevY?: number;
 }
-export type EventHandler<E = EventType & EventData> = (e: E) => void | boolean;
-export type DragHandler<E = EventType & DragEventData> = (e: E) => void | boolean;
+export type EventHandler<E = DragEventData> = (e: E) => void | boolean;
+export type DragHandler<E = DragData> = (e: E) => void | boolean;

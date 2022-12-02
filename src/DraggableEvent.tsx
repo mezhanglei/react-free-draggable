@@ -29,11 +29,9 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
   child: any;
   cloneLayer: any;
   initStyle: { width: string, height: string, left: number, top: number } | undefined
-  moveStartFlag: boolean;
   constructor(props: DraggableEventProps) {
     super(props);
     this.dragging = false;
-    this.moveStartFlag = true;
     this.eventData = {};
     this.state = {
     };
@@ -227,10 +225,9 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     const parent = this.getEventBounds();
     const child = this.findDOMNode();
     const eventXY = getEventPosition(e, parent);
-    const { scale, grid, onMoveStart, onMove, } = this.props;
+    const { scale, grid, onMove, } = this.props;
     const eventData = this.eventData;
     const { lastEventX, lastEventY } = eventData as DragEventData;
-    const moveStartFlag = this.moveStartFlag;
     if (!eventXY || !scale) return;
     let eventX = eventXY?.x;
     let eventY = eventXY?.y;
@@ -254,11 +251,6 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     }
     this.eventData = newEventData
     this.setLayerNode({ deltaX: newEventData?.deltaX, deltaY: newEventData?.deltaY });
-
-    if (moveStartFlag) {
-      onMoveStart && onMoveStart(e, newEventData);
-    }
-    this.moveStartFlag = false
     onMove && onMove(e, newEventData);
   };
 
@@ -277,7 +269,6 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
     this.eventData = newEventData
     // 重置
     this.removeLayerNode()
-    this.moveStartFlag = true;
     this.dragging = false;
     // 移除文本因滚动造成的显示
     if (ownerDocument) {
@@ -316,7 +307,6 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
       scale,
       grid,
       onStart,
-      onMoveStart,
       onMove,
       onEnd,
       children,
@@ -333,7 +323,7 @@ class DraggableEvent extends React.Component<DraggableEventProps> {
 }
 
 const wrapper = function (InnerComponent: typeof DraggableEvent) {
-  return React.forwardRef((props: any, ref) => {
+  return React.forwardRef((props: DraggableEventProps, ref) => {
     return (
       <InnerComponent forwardedRef={ref} {...props} />
     )

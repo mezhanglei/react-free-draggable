@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-8.0.3-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.0.4-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 

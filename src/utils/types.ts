@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 
 // 事件对象
 export type EventType = MouseEvent | TouchEvent;
@@ -46,7 +46,7 @@ export interface BoundsInterface {
 }
 
 // 基础拖拽属性
-export interface BaseDragProps {
+export interface BaseDragProps extends React.HtmlHTMLAttributes<HTMLElement> {
   children?: any;
   className?: string;
   style?: CSSProperties;
@@ -65,7 +65,6 @@ export interface BaseDragProps {
 // DraggableEvent的props的类型
 export interface DraggableEventProps extends BaseDragProps {
   onStart?: EventHandler; // 拖拽开始事件
-  onMoveStart?: EventHandler; // 移动开始事件
   onMove?: EventHandler; // 拖拽进行事件
   onEnd?: EventHandler; // 拖拽结束事件
   showLayer?: boolean; // 是否展示拖拽阴影浮层
@@ -103,5 +102,5 @@ export interface DraggableState {
 }
 
 // 事件处理函数的type
-export type EventHandler<E = EventType, D = DragEventData> = (e: E, data: D) => void | boolean;
-export type DragHandler<E = EventType, D = DragData> = (e: E, data: D) => void | boolean;
+export type EventHandler<E = EventType, D = DragEventData> = (e: E, data?: D) => void | boolean;
+export type DragHandler<E = EventType, D = DragData> = (e: E, data?: D) => void | boolean;

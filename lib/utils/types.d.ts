@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 export type EventType = MouseEvent | TouchEvent;
 export type DragEventData = {
     target?: any;
@@ -31,7 +31,7 @@ export interface BoundsInterface {
     bottom: number;
     element: string | HTMLElement;
 }
-export interface BaseDragProps {
+export interface BaseDragProps extends React.HtmlHTMLAttributes<HTMLElement> {
     children?: any;
     className?: string;
     style?: CSSProperties;
@@ -48,7 +48,6 @@ export interface BaseDragProps {
 }
 export interface DraggableEventProps extends BaseDragProps {
     onStart?: EventHandler;
-    onMoveStart?: EventHandler;
     onMove?: EventHandler;
     onEnd?: EventHandler;
     showLayer?: boolean;
@@ -79,5 +78,5 @@ export interface DraggableState {
     prevX?: number;
     prevY?: number;
 }
-export type EventHandler<E = EventType, D = DragEventData> = (e: E, data: D) => void | boolean;
-export type DragHandler<E = EventType, D = DragData> = (e: E, data: D) => void | boolean;
+export type EventHandler<E = EventType, D = DragEventData> = (e: E, data?: D) => void | boolean;
+export type DragHandler<E = EventType, D = DragData> = (e: E, data?: D) => void | boolean;

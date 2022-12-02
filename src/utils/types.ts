@@ -4,7 +4,7 @@ import { CSSProperties } from "react";
 export type EventType = MouseEvent | TouchEvent;
 
 // 拖拽元素的位置接口
-export type DragEventData = EventType & {
+export type DragEventData = {
   target?: any; // 节点
   deltaX: number; // x方向移动的距离
   deltaY: number; // y方向移动的距离
@@ -15,7 +15,7 @@ export type DragEventData = EventType & {
 }
 
 // 拖拽元素的位置接口
-export type DragData = EventType & {
+export interface DragData extends DragEventData {
   x?: number; // 元素在页面中的位置x
   y?: number; // 元素在页面中的位置y
   translateX?: number; // 当前x轴的translate
@@ -103,5 +103,5 @@ export interface DraggableState {
 }
 
 // 事件处理函数的type
-export type EventHandler<E = DragEventData> = (e: E) => void | boolean;
-export type DragHandler<E = DragData> = (e: E) => void | boolean;
+export type EventHandler<E = EventType, D = DragEventData> = (e: E, data: D) => void | boolean;
+export type DragHandler<E = EventType, D = DragData> = (e: E, data: D) => void | boolean;

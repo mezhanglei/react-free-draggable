@@ -116,9 +116,9 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     return parent;
   }
 
-  onStart: EventHandler = (e) => {
+  onStart: EventHandler = (e, eventData) => {
     this.dragType = DragTypes.Start;
-    const node = e?.target;
+    const node = eventData?.target;
     const parent = this.getBoundsParent();
     const pos = getInsidePosition(node, parent);
     if (!pos) return;
@@ -128,7 +128,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     const { onStart } = this.props;
 
     const newDragData = {
-      ...e,
+      ...eventData,
       ...dragData,
       x: positionX,
       y: positionY
@@ -138,10 +138,10 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
       dragData: newDragData
     });
     this.dragStartData = newDragData
-    onStart && onStart(newDragData);
+    onStart && onStart(e, newDragData);
   };
 
-  onMove: EventHandler = (e) => {
+  onMove: EventHandler = (e, eventData) => {
     const dragType = this.dragType;
     if (!dragType) return;
     this.dragType = DragTypes.Move;
@@ -151,7 +151,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     const lastY = dragData?.y ?? 0;
     let translateX = dragData?.translateX ?? 0;
     let translateY = dragData?.translateY ?? 0;
-    const { target, deltaX, deltaY } = e;
+    const { target, deltaX, deltaY } = eventData;
     const calculationX = lastX + deltaX;
     const calculationY = lastY + deltaY;
     let nowX = calculationX;
@@ -179,7 +179,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
 
     // 拖拽生成的位置信息
     const newDragData = {
-      ...e,
+      ...eventData,
       translateX: nowTranslateX,
       translateY: nowTranslateY,
       x: nowX,
@@ -189,10 +189,10 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     this.setState({
       dragData: newDragData
     });
-    onMove && onMove(newDragData);
+    onMove && onMove(e, newDragData);
   };
 
-  onEnd: EventHandler = (e) => {
+  onEnd: EventHandler = (e, eventData) => {
     const { dragData } = this.state;
     const dragType = this.dragType;
     const isUninstall = this.isUninstall;
@@ -201,9 +201,9 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
     if (!dragType || !dragData) return;
     this.slackX = 0;
     this.slackY = 0;
-    const endData = { ...e, ...dragData };
+    const endData = { ...eventData, ...dragData };
     // 回调函数先执行然后再重置状态
-    onEnd && onEnd(endData);
+    onEnd && onEnd(e, endData);
     // 组件没卸载情况下设置位置
     if (!isUninstall) {
       // 根据props值设置translate
@@ -265,7 +265,7 @@ class Draggable extends React.Component<DraggableProps, DraggableState> {
 }
 
 const wrapper = function (InnerComponent: typeof Draggable) {
-  return React.forwardRef((props: DraggableProps, ref) => {
+  return React.forwardRef((props: any, ref) => {
     return (
       <InnerComponent forwardedRef={ref} {...props} />
     )

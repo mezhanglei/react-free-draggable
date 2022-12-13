@@ -60,7 +60,7 @@ export interface DraggableProps extends BaseDragProps {
     y?: number;
     positionOffset?: PositionType;
     bounds?: string | HTMLElement | BoundsInterface;
-    restoreOnEnd?: boolean;
+    resetOnEnd?: boolean;
     transform?: string;
     onStart?: DragHandler;
     onMove?: DragHandler;

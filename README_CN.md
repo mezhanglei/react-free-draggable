@@ -2,15 +2,15 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-8.0.4-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
 利用transform实现的自由拖拽组件, 拖拽过程不影响页面布局.
 
 # version8.x
-  - 更改`onStart`, `onMove`, `onEnd` 回调函数的参数，`e.target`为当前的拖拽节点
-  - ~~`fixed`~~ 属性改为 `restoreOnEnd`属性，表示拖拽结束后是否还原位置
+  - 更改`onStart`, `onMove`, `onEnd` 回调函数的参数
+  - ~~`fixed`~~ 属性改为 `resetOnEnd`属性，表示拖拽结束后是否还原位置
   - ~~`childProps`~~ 属性废弃
 
 # Draggbale组件
@@ -75,6 +75,6 @@ import Draggable from 'react-free-draggable';
 | direction                          | `['vertical','horizontal']`             | -                                                  | 限制拖拽运动方向                                                                                  |
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, element: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
-| restoreOnEnd                   | `boolean`                | -                                               | 拖拽结束后是否还原位置                                 |
+| resetOnEnd                   | `boolean`                | -                                               | 拖拽结束后是否还原位置                                 |
 | showLayer                   | `boolean`                | -                                               | `DraggableEvent`组件中是否提供拖拽显示浮层副本                                 |
 | layerStyle                   | `CSSProperties`                | -                                               | `DraggableEvent`组件自定义显示浮层副本的样式                                 |

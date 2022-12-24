@@ -2,13 +2,14 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-8.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.0.6-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
 利用transform实现的自由拖拽组件, 拖拽过程不影响页面布局.
 
 # version8.x
+  - 移除`ReactDOM.findDOMNode`, 改为ref引用获取dom。如果children为函数组件，需要用`React.forwardRef`包裹.
   - 更改`onStart`, `onMove`, `onEnd` 回调函数的参数
   - ~~`fixed`~~ 属性改为 `resetOnEnd`属性，表示拖拽结束后是否还原位置
   - ~~`childProps`~~ 属性废弃

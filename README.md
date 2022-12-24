@@ -2,13 +2,14 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-8.0.5-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.0.6-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
 Using the free drag and drop component of Transform, the drag process does not affect the page layout
 
 # version8.x
+  - Remove `ReactDOM.findDOMNode`, change to ref reference to get the dom. if children is a function component, you need to wrap it with `React.forwardRef`.
   - Change the parameters of `onStart`, `onMove`, `onEnd` callbacks
   - ~~`fixed`~~ property to `resetOnEnd` property to indicate whether to restore the position after the drag end
   - ~~`childProps`~~ property is deprecated

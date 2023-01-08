@@ -50,9 +50,6 @@ export interface DraggableEventProps extends BaseDragProps {
     onStart?: EventHandler;
     onMove?: EventHandler;
     onEnd?: EventHandler;
-    showLayer?: boolean;
-    customLayer?: any;
-    layerStyle?: CSSProperties;
 }
 export interface DraggableProps extends BaseDragProps {
     children?: any;

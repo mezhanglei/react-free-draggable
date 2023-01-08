@@ -2,7 +2,7 @@
 
 English | [中文说明](./README_CN.md)
 
-[![Version](https://img.shields.io/badge/version-8.0.6-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.1.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # Introduction?
 
@@ -13,6 +13,8 @@ Using the free drag and drop component of Transform, the drag process does not a
   - Change the parameters of `onStart`, `onMove`, `onEnd` callbacks
   - ~~`fixed`~~ property to `resetOnEnd` property to indicate whether to restore the position after the drag end
   - ~~`childProps`~~ property is deprecated
+  - ~~`childProps`~~ property is deprecated
+  - 8.1.0 ~~`showLayer`~~ and ~~`layerStyle`~~ deprecated.
 
 # Draggbale
 
@@ -77,8 +79,3 @@ import Draggable from 'react-free-draggable';
 | positionOffset                | `{x: number, y: number}`          | -                                                  | Transform position increment                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, element: string / HTMLElement }`                   | -              | The range within the element, if it is element, the position is range in element, but if it is object, it is the range of the `element` element                                                                                          |
 | resetOnEnd                   | `boolean`                | -                                               | Restore position when drag end                                |
-| showLayer                   | `boolean`                | -                                               | `DraggableEvent` component's display of the layer copy                                  |
-| layerStyle                   | `CSSProperties`                | -                                               | `DraggableEvent` component custom the style of the layer copy
-
-
-

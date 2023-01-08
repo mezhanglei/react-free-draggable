@@ -2,7 +2,7 @@
 
 [English](./README.md) | 中文说明
 
-[![Version](https://img.shields.io/badge/version-8.0.6-green)](https://www.npmjs.com/package/react-free-draggable)
+[![Version](https://img.shields.io/badge/version-8.1.0-green)](https://www.npmjs.com/package/react-free-draggable)
 
 # 适用场景
 
@@ -13,6 +13,7 @@
   - 更改`onStart`, `onMove`, `onEnd` 回调函数的参数
   - ~~`fixed`~~ 属性改为 `resetOnEnd`属性，表示拖拽结束后是否还原位置
   - ~~`childProps`~~ 属性废弃
+  - 8.1.0 移除 ~~`showLayer`~~ and ~~`layerStyle`~~
 
 # Draggbale组件
 
@@ -77,5 +78,3 @@ import Draggable from 'react-free-draggable';
 | positionOffset                | `{x: number, y: number}`          | -                                                  | transform的位置增量                                                                                  |
 | bounds                        | `string / HTMLElement / {left: number, right: number, top: number, bottom: number, element: string / HTMLElement }`                   | -     | 在bounds内部范围的限制拖拽范围，如果为具体元素则限制该元素范围内，如果为一个范围对象，则限制在该对象内元素的范围内活动                                                                                          |
 | resetOnEnd                   | `boolean`                | -                                               | 拖拽结束后是否还原位置                                 |
-| showLayer                   | `boolean`                | -                                               | `DraggableEvent`组件中是否提供拖拽显示浮层副本                                 |
-| layerStyle                   | `CSSProperties`                | -                                               | `DraggableEvent`组件自定义显示浮层副本的样式                                 |

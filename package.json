@@ -1,6 +1,6 @@
 {
   "name": "react-free-draggable",
-  "version": "8.0.6",
+  "version": "8.1.0",
   "description": "transform实现的自由拖拽组件",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",

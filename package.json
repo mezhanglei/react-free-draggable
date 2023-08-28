@@ -1,6 +1,6 @@
 {
   "name": "react-free-draggable",
-  "version": "8.1.1",
+  "version": "8.1.2",
   "description": "transform实现的自由拖拽组件",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
@@ -90,6 +90,10 @@
     "react-dom": "^16.14.0",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^5.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "browserslist": [
     "defaults",
